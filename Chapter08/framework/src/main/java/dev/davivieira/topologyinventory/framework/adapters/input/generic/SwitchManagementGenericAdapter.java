@@ -7,7 +7,13 @@ import dev.davivieira.topologyinventory.application.usecases.SwitchManagementUse
 import dev.davivieira.topologyinventory.domain.entity.EdgeRouter;
 import dev.davivieira.topologyinventory.domain.entity.Router;
 import dev.davivieira.topologyinventory.domain.entity.Switch;
-import dev.davivieira.topologyinventory.domain.vo.*;
+import dev.davivieira.topologyinventory.domain.vo.IP;
+import dev.davivieira.topologyinventory.domain.vo.Id;
+import dev.davivieira.topologyinventory.domain.vo.Location;
+import dev.davivieira.topologyinventory.domain.vo.Model;
+import dev.davivieira.topologyinventory.domain.vo.RouterType;
+import dev.davivieira.topologyinventory.domain.vo.SwitchType;
+import dev.davivieira.topologyinventory.domain.vo.Vendor;
 import dev.davivieira.topologyinventory.framework.adapters.output.h2.RouterManagementH2Adapter;
 import dev.davivieira.topologyinventory.framework.adapters.output.h2.SwitchManagementH2Adapter;
 
@@ -16,11 +22,11 @@ public class SwitchManagementGenericAdapter {
     private SwitchManagementUseCase switchManagementUseCase;
     private RouterManagementUseCase routerManagementUseCase;
 
-    public SwitchManagementGenericAdapter(){
+    public SwitchManagementGenericAdapter() {
         setPorts();
     }
 
-    private void setPorts(){
+    private void setPorts() {
         this.routerManagementUseCase = new RouterManagementInputPort(
                 RouterManagementH2Adapter.getInstance()
         );
@@ -49,7 +55,7 @@ public class SwitchManagementGenericAdapter {
     ) {
         Switch newSwitch = switchManagementUseCase.createSwitch(vendor, model, ip, location, switchType);
         Router edgeRouter = routerManagementUseCase.retrieveRouter(routerId);
-        if(!edgeRouter.getRouterType().equals(RouterType.EDGE))
+        if (!edgeRouter.getRouterType().equals(RouterType.EDGE))
             throw new UnsupportedOperationException("Please inform the id of an edge router to add a switch");
         Router router = switchManagementUseCase.addSwitchToEdgeRouter(newSwitch, (EdgeRouter) edgeRouter);
         return (EdgeRouter) routerManagementUseCase.persistRouter(router);

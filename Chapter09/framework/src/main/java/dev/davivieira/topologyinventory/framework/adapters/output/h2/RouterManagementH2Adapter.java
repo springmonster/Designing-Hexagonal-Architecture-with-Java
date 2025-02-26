@@ -15,7 +15,7 @@ public class RouterManagementH2Adapter implements RouterManagementOutputPort {
     @PersistenceContext
     private EntityManager em;
 
-    public RouterManagementH2Adapter(){
+    public RouterManagementH2Adapter() {
         setUpH2Database();
     }
 

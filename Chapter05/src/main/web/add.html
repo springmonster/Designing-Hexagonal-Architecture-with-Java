@@ -2,8 +2,8 @@
 <head>
     <title>Topology & Inventory | Add Network</title>
     <meta charset="UTF-8">
-    <meta name="description" content="Topology & Inventory">
-    <link rel="stylesheet" href="css/main.css">
+    <meta content="Topology & Inventory" name="description">
+    <link href="css/main.css" rel="stylesheet">
     <script src="js/nav.js"></script>
 </head>
 <body>
@@ -22,28 +22,30 @@
                         <form name="addNetwork" onsubmit="return false;">
                             <div class="row">
                                 <div class="col-75">
-                                    <input type="text" id="routerId"
-                                           name="routerId"
-                                           placeholder="Enter the router id">
+                                    <input id="routerId" name="routerId"
+                                           placeholder="Enter the router id"
+                                           type="text">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-75">
-                                    <input type="text" id="address" name="address" placeholder="Enter a network address">
+                                    <input id="address" name="address" placeholder="Enter a network address"
+                                           type="text">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-75">
-                                    <input type="text" id="name" name="name" placeholder="Enter a network name">
+                                    <input id="name" name="name" placeholder="Enter a network name" type="text">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-75">
-                                    <input type="text" id="cidr" name="cidr" placeholder="Enter a network cidr">
+                                    <input id="cidr" name="cidr" placeholder="Enter a network cidr" type="text">
                                 </div>
                             </div>
                             <div class="row">
-                                <input class="submit-btn" id="go-button" type="submit" value="Submit" onclick="addNetworkToRouter()">
+                                <input id="go-button" class="submit-btn" onclick="addNetworkToRouter()" type="submit"
+                                       value="Submit">
                             </div>
                         </form>
                     </div>

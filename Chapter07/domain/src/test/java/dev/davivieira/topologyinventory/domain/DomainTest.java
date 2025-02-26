@@ -5,10 +5,18 @@ import dev.davivieira.topologyinventory.domain.entity.EdgeRouter;
 import dev.davivieira.topologyinventory.domain.entity.Router;
 import dev.davivieira.topologyinventory.domain.entity.Switch;
 import dev.davivieira.topologyinventory.domain.exception.GenericSpecificationException;
-import dev.davivieira.topologyinventory.domain.service.RouterService;
 import dev.davivieira.topologyinventory.domain.service.NetworkService;
+import dev.davivieira.topologyinventory.domain.service.RouterService;
 import dev.davivieira.topologyinventory.domain.service.SwitchService;
-import dev.davivieira.topologyinventory.domain.vo.*;
+import dev.davivieira.topologyinventory.domain.vo.IP;
+import dev.davivieira.topologyinventory.domain.vo.Id;
+import dev.davivieira.topologyinventory.domain.vo.Location;
+import dev.davivieira.topologyinventory.domain.vo.Model;
+import dev.davivieira.topologyinventory.domain.vo.Network;
+import dev.davivieira.topologyinventory.domain.vo.Protocol;
+import dev.davivieira.topologyinventory.domain.vo.RouterType;
+import dev.davivieira.topologyinventory.domain.vo.SwitchType;
+import dev.davivieira.topologyinventory.domain.vo.Vendor;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -17,7 +25,6 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -25,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class DomainTest {
 
     @Test
-    public void addNetworkToSwitch(){
+    public void addNetworkToSwitch() {
         var location = createLocation("US");
         var newNetwork = createTestNetwork("30.0.0.1", 8);
         var networkSwitch = createSwitch("30.0.0.0", 8, location);
@@ -33,7 +40,7 @@ public class DomainTest {
     }
 
     @Test
-    public void addNetworkToSwitch_failBecauseSameNetworkAddress(){
+    public void addNetworkToSwitch_failBecauseSameNetworkAddress() {
         var location = createLocation("US");
         var newNetwork = createTestNetwork("30.0.0.0", 8);
         var networkSwitch = createSwitch("30.0.0.0", 8, location);
@@ -41,60 +48,60 @@ public class DomainTest {
     }
 
     @Test
-    public void addSwitchToEdgeRouter(){
+    public void addSwitchToEdgeRouter() {
         var location = createLocation("US");
         var networkSwitch = createSwitch("30.0.0.0", 8, location);
-        var edgeRouter = createEdgeRouter(location,"30.0.0.1");
+        var edgeRouter = createEdgeRouter(location, "30.0.0.1");
 
         edgeRouter.addSwitch(networkSwitch);
 
-        assertEquals(1,edgeRouter.getSwitches().size());
+        assertEquals(1, edgeRouter.getSwitches().size());
     }
 
     @Test
-    public void addSwitchToEdgeRouter_failBecauseEquipmentOfDifferentCountries(){
+    public void addSwitchToEdgeRouter_failBecauseEquipmentOfDifferentCountries() {
         var locationUS = createLocation("US");
         var locationJP = createLocation("JP");
         var networkSwitch = createSwitch("30.0.0.0", 8, locationUS);
-        var edgeRouter = createEdgeRouter(locationJP,"30.0.0.1");
+        var edgeRouter = createEdgeRouter(locationJP, "30.0.0.1");
 
         assertThrows(GenericSpecificationException.class, () -> edgeRouter.addSwitch(networkSwitch));
     }
 
     @Test
-    public void addEdgeToCoreRouter(){
+    public void addEdgeToCoreRouter() {
         var location = createLocation("US");
-        var edgeRouter = createEdgeRouter(location,"30.0.0.1");
+        var edgeRouter = createEdgeRouter(location, "30.0.0.1");
         var coreRouter = createCoreRouter(location, "40.0.0.1");
 
         coreRouter.addRouter(edgeRouter);
 
-        assertEquals(1,coreRouter.getRouters().size());
+        assertEquals(1, coreRouter.getRouters().size());
     }
 
     @Test
-    public void addEdgeToCoreRouter_failBecauseRoutersOfDifferentCountries(){
+    public void addEdgeToCoreRouter_failBecauseRoutersOfDifferentCountries() {
         var locationUS = createLocation("US");
         var locationJP = createLocation("JP");
-        var edgeRouter = createEdgeRouter(locationUS,"30.0.0.1");
+        var edgeRouter = createEdgeRouter(locationUS, "30.0.0.1");
         var coreRouter = createCoreRouter(locationJP, "40.0.0.1");
 
         assertThrows(GenericSpecificationException.class, () -> coreRouter.addRouter(edgeRouter));
     }
 
     @Test
-    public void addCoreToCoreRouter(){
+    public void addCoreToCoreRouter() {
         var location = createLocation("US");
         var coreRouter = createCoreRouter(location, "30.0.0.1");
         var newCoreRouter = createCoreRouter(location, "40.0.0.1");
 
         coreRouter.addRouter(newCoreRouter);
 
-        assertEquals(1,coreRouter.getRouters().size());
+        assertEquals(1, coreRouter.getRouters().size());
     }
 
     @Test
-    public void addCoreToCoreRouter_failBecauseRoutersOfSameIp(){
+    public void addCoreToCoreRouter_failBecauseRoutersOfSameIp() {
         var location = createLocation("US");
         var coreRouter = createCoreRouter(location, "30.0.0.1");
         var newCoreRouter = createCoreRouter(location, "30.0.0.1");
@@ -103,7 +110,7 @@ public class DomainTest {
     }
 
     @Test
-    public void removeRouter(){
+    public void removeRouter() {
         var location = createLocation("US");
         var coreRouter = createCoreRouter(location, "30.0.0.1");
         var edgeRouter = createEdgeRouter(location, "40.0.0.1");
@@ -116,7 +123,7 @@ public class DomainTest {
     }
 
     @Test
-    public void removeSwitch(){
+    public void removeSwitch() {
         var location = createLocation("US");
         var network = createTestNetwork("30.0.0.0", 8);
         var networkSwitch = createSwitch("30.0.0.0", 8, location);
@@ -125,13 +132,13 @@ public class DomainTest {
         edgeRouter.addSwitch(networkSwitch);
         networkSwitch.removeNetworkFromSwitch(network);
         var expectedId = Id.withId("f8c3de3d-1fea-4d7c-a8b0-29f63c4c3490");
-        var actualId= edgeRouter.removeSwitch(networkSwitch).getId();
+        var actualId = edgeRouter.removeSwitch(networkSwitch).getId();
 
         assertEquals(expectedId, actualId);
     }
 
     @Test
-    public void removeNetwork(){
+    public void removeNetwork() {
         var location = createLocation("US");
         var network = createTestNetwork("30.0.0.0", 8);
         var networkSwitch = createSwitch("30.0.0.0", 8, location);
@@ -142,7 +149,7 @@ public class DomainTest {
     }
 
     @Test
-    public void filterRouterByType(){
+    public void filterRouterByType() {
         List<Router> routers = new ArrayList<>();
         var location = createLocation("US");
         var coreRouter = createCoreRouter(location, "30.0.0.1");
@@ -163,7 +170,7 @@ public class DomainTest {
     }
 
     @Test
-    public void filterRouterByVendor(){
+    public void filterRouterByVendor() {
         List<Router> routers = new ArrayList<>();
         var location = createLocation("US");
         var coreRouter = createCoreRouter(location, "30.0.0.1");
@@ -182,7 +189,7 @@ public class DomainTest {
     }
 
     @Test
-    public void filterRouterByLocation(){
+    public void filterRouterByLocation() {
         List<Router> routers = new ArrayList<>();
         var location = createLocation("US");
         var coreRouter = createCoreRouter(location, "30.0.0.1");
@@ -195,7 +202,7 @@ public class DomainTest {
     }
 
     @Test
-    public void filterRouterByModel(){
+    public void filterRouterByModel() {
         List<Router> routers = new ArrayList<>();
         var location = createLocation("US");
         var coreRouter = createCoreRouter(location, "30.0.0.1");
@@ -204,13 +211,13 @@ public class DomainTest {
         coreRouter.addRouter(newCoreRouter);
         routers.add(coreRouter);
 
-        var actualModel= RouterService.filterAndRetrieveRouter(routers,
+        var actualModel = RouterService.filterAndRetrieveRouter(routers,
                 Router.getModelPredicate(Model.XYZ0001)).get(0).getModel();
         assertEquals(Model.XYZ0001, actualModel);
     }
 
     @Test
-    public void filterSwitchByType(){
+    public void filterSwitchByType() {
         List<Switch> switches = new ArrayList<>();
         var location = createLocation("US");
         var networkSwitch = createSwitch("30.0.0.0", 8, location);
@@ -223,7 +230,7 @@ public class DomainTest {
     }
 
     @Test
-    public void filterNetworkByProtocol(){
+    public void filterNetworkByProtocol() {
         var testNetwork = createTestNetwork("30.0.0.0", 8);
         var networks = createNetworks(testNetwork);
 
@@ -234,7 +241,7 @@ public class DomainTest {
     }
 
     @Test
-    public void findRouterById(){
+    public void findRouterById() {
         List<Router> routers = new ArrayList<>();
         Map<Id, Router> routersOfCoreRouter = new HashMap<>();
         var location = createLocation("US");
@@ -251,7 +258,7 @@ public class DomainTest {
     }
 
     @Test
-    public void findSwitchById(){
+    public void findSwitchById() {
         List<Switch> switches = new ArrayList<>();
         Map<Id, Switch> switchesOfEdgeRouter = new HashMap<>();
         var location = createLocation("US");
@@ -264,7 +271,7 @@ public class DomainTest {
         assertEquals(expectedId, actualId);
     }
 
-    private Network createTestNetwork(String address, int CIDR){
+    private Network createTestNetwork(String address, int CIDR) {
         return Network.builder().
                 networkAddress(IP.fromAddress(address)).
                 networkName("NewNetwork").
@@ -273,7 +280,7 @@ public class DomainTest {
     }
 
 
-    private Location createLocation(String country){
+    private Location createLocation(String country) {
         return Location.builder().
                 address("Test street").
                 city("Test City").
@@ -285,20 +292,20 @@ public class DomainTest {
                 build();
     }
 
-    private List<Network> createNetworks(Network network){
+    private List<Network> createNetworks(Network network) {
         List<Network> networks = new ArrayList<>();
         networks.add(network);
         return networks;
     }
 
-    private Switch createSwitch(String address, int cidr, Location location){
+    private Switch createSwitch(String address, int cidr, Location location) {
         var newNetwork = createTestNetwork(address, cidr);
         var networks = createNetworks(newNetwork);
         var networkSwitch = createNetworkSwitch(location, networks);
         return networkSwitch;
     }
 
-    private Switch createNetworkSwitch(Location location, List<Network> networks){
+    private Switch createNetworkSwitch(Location location, List<Network> networks) {
         return Switch.builder().
                 id(Id.withId("f8c3de3d-1fea-4d7c-a8b0-29f63c4c3490")).
                 vendor(Vendor.CISCO).
@@ -310,7 +317,7 @@ public class DomainTest {
                 build();
     }
 
-    private EdgeRouter createEdgeRouter(Location location, String address){
+    private EdgeRouter createEdgeRouter(Location location, String address) {
         Map<Id, Switch> switchesOfEdgeRouter = new HashMap<>();
         return EdgeRouter.builder().
                 id(Id.withoutId()).
@@ -323,7 +330,7 @@ public class DomainTest {
                 build();
     }
 
-    private CoreRouter createCoreRouter(Location location, String address){
+    private CoreRouter createCoreRouter(Location location, String address) {
         Map<Id, Router> routersOfCoreRouter = new HashMap<>();
         return CoreRouter.builder().
                 id(Id.withoutId()).

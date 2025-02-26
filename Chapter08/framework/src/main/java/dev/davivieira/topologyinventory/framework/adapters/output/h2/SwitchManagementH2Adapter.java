@@ -17,8 +17,15 @@ public class SwitchManagementH2Adapter implements SwitchManagementOutputPort {
     @PersistenceContext
     private EntityManager em;
 
-    private SwitchManagementH2Adapter(){
+    private SwitchManagementH2Adapter() {
         setUpH2Database();
+    }
+
+    public static SwitchManagementH2Adapter getInstance() {
+        if (instance == null) {
+            instance = new SwitchManagementH2Adapter();
+        }
+        return instance;
     }
 
     @Override
@@ -33,12 +40,5 @@ public class SwitchManagementH2Adapter implements SwitchManagementOutputPort {
         EntityManager em =
                 entityManagerFactory.createEntityManager();
         this.em = em;
-    }
-
-    public static SwitchManagementH2Adapter getInstance() {
-        if (instance == null) {
-            instance = new SwitchManagementH2Adapter();
-        }
-        return instance;
     }
 }

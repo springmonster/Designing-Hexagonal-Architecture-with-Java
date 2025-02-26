@@ -22,15 +22,6 @@ import javax.persistence.Table;
 @Table(name = "networks")
 public class NetworkData {
 
-    @ManyToOne
-    @JoinColumn(name="switch_id")
-    private SwitchData switchData;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="network_id")
-    private int id;
-
     @AttributeOverrides({
             @AttributeOverride(
                     name = "address",
@@ -42,12 +33,17 @@ public class NetworkData {
                             name = "network_protocol")),
     })
     IPData ip;
-
-    @Column(name="network_name")
+    @Column(name = "network_name")
     String name;
-
-    @Column(name="network_cidr")
+    @Column(name = "network_cidr")
     Integer cidr;
+    @ManyToOne
+    @JoinColumn(name = "switch_id")
+    private SwitchData switchData;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "network_id")
+    private int id;
 
     public NetworkData(IPData ip, String name, Integer cidr) {
         this.ip = ip;

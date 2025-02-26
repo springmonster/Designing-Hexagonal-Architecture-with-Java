@@ -1,6 +1,10 @@
 package dev.davivieira.topologyinventory.framework.adapters.output.h2.data;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,27 +19,27 @@ import lombok.NoArgsConstructor;
 @MappedSuperclass
 public class LocationData {
     @Id
-    @Column(name="location_id")
+    @Column(name = "location_id")
     private int locationId;
 
-    @Column(name="address")
+    @Column(name = "address")
     private String address;
 
-    @Column(name="city")
+    @Column(name = "city")
     private String city;
 
-    @Column(name="state")
+    @Column(name = "state")
     private String state;
 
-    @Column(name="zipcode")
+    @Column(name = "zipcode")
     private int zipcode;
 
-    @Column(name="country")
+    @Column(name = "country")
     private String country;
 
-    @Column(name="latitude")
+    @Column(name = "latitude")
     private float latitude;
 
-    @Column(name="longitude")
+    @Column(name = "longitude")
     private float longitude;
 }

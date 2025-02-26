@@ -22,8 +22,8 @@ spec:
         - name: topology-inventory
           image: s4intlaurent/topology-inventory-native:latest
           envFrom:
-          - configMapRef:
-              name: topology-inventory
+            - configMapRef:
+                name: topology-inventory
           livenessProbe:
             httpGet:
               path: /q/health/ready

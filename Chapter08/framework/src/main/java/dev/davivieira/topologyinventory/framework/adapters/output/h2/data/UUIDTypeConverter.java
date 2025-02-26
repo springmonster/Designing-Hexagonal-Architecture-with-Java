@@ -9,32 +9,27 @@ import java.sql.Types;
 import java.util.UUID;
 
 
-public class UUIDTypeConverter implements Converter
-{
+public class UUIDTypeConverter implements Converter {
     @Override
-    public UUID convertObjectValueToDataValue(Object objectValue, Session session)
-    {
+    public UUID convertObjectValueToDataValue(Object objectValue, Session session) {
         return (UUID) objectValue;
     }
 
 
     @Override
-    public UUID convertDataValueToObjectValue(Object dataValue, Session session)
-    {
+    public UUID convertDataValueToObjectValue(Object dataValue, Session session) {
         return (UUID) dataValue;
     }
 
 
     @Override
-    public boolean isMutable()
-    {
+    public boolean isMutable() {
         return true;
     }
 
 
     @Override
-    public void initialize(DatabaseMapping mapping, Session session)
-    {
+    public void initialize(DatabaseMapping mapping, Session session) {
         DatabaseField field = mapping.getField();
         field.setSqlType(Types.OTHER);
         field.setTypeName("java.util.UUID");

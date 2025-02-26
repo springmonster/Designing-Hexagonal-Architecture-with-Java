@@ -14,7 +14,7 @@ public class CIDRSpecification extends AbstractSpecification<Integer> {
 
     @Override
     public void check(Integer cidr) throws GenericSpecificationException {
-        if(!isSatisfiedBy(cidr))
-            throw new GenericSpecificationException("CIDR is below "+CIDRSpecification.MINIMUM_ALLOWED_CIDR);
+        if (!isSatisfiedBy(cidr))
+            throw new GenericSpecificationException("CIDR is below " + CIDRSpecification.MINIMUM_ALLOWED_CIDR);
     }
 }

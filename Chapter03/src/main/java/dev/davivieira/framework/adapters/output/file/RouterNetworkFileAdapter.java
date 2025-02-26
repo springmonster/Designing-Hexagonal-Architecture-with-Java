@@ -3,7 +3,12 @@ package dev.davivieira.framework.adapters.output.file;
 import dev.davivieira.application.ports.output.RouterNetworkOutputPort;
 import dev.davivieira.domain.entity.Router;
 import dev.davivieira.domain.entity.Switch;
-import dev.davivieira.domain.vo.*;
+import dev.davivieira.domain.vo.IP;
+import dev.davivieira.domain.vo.Network;
+import dev.davivieira.domain.vo.RouterId;
+import dev.davivieira.domain.vo.RouterType;
+import dev.davivieira.domain.vo.SwitchId;
+import dev.davivieira.domain.vo.SwitchType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +19,22 @@ public class RouterNetworkFileAdapter implements RouterNetworkOutputPort {
 
     private List<Router> routers = new ArrayList<>();
 
+    private RouterNetworkFileAdapter() {
+        createSampleRouter();
+    }
+
+    public static RouterNetworkFileAdapter getInstance() {
+        if (instance == null) {
+            instance = new RouterNetworkFileAdapter();
+        }
+        return instance;
+    }
+
     @Override
     public Router fetchRouterById(RouterId routerId) {
         Router retrievedRouter = null;
-        for(Router router: routers){
-            if(router.getRouterId().getId().equals(routerId.getId())){
+        for (Router router : routers) {
+            if (router.getRouterId().getId().equals(routerId.getId())) {
                 retrievedRouter = router;
                 break;
             }
@@ -35,18 +51,7 @@ public class RouterNetworkFileAdapter implements RouterNetworkOutputPort {
     }
 
     @Override
-    public boolean persistRouter(Router router){
+    public boolean persistRouter(Router router) {
         return this.routers.add(router);
-    }
-
-    private RouterNetworkFileAdapter(){
-        createSampleRouter();
-    }
-
-    public static RouterNetworkFileAdapter getInstance() {
-        if (instance == null) {
-            instance = new RouterNetworkFileAdapter();
-        }
-        return instance;
     }
 }

@@ -61,7 +61,7 @@ public class SwitchManagementAdapter {
                         createSwitch.getLocation(),
                         createSwitch.getSwitchType());
         Router edgeRouter = routerManagementUseCase.retrieveRouter(Id.withId(edgeRouterId));
-        if(!edgeRouter.getRouterType().equals(RouterType.EDGE))
+        if (!edgeRouter.getRouterType().equals(RouterType.EDGE))
             throw new UnsupportedOperationException("Please inform the id of an edge router to add a switch");
         Router router = switchManagementUseCase.addSwitchToEdgeRouter(newSwitch, (EdgeRouter) edgeRouter);
 

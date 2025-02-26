@@ -11,13 +11,13 @@ public class NetworkAmountSpec extends AbstractSpecification<Equipment> {
 
     @Override
     public boolean isSatisfiedBy(Equipment switchNetwork) {
-        return ((Switch)switchNetwork).getSwitchNetworks().size()
-                <=MAXIMUM_ALLOWED_NETWORKS;
+        return ((Switch) switchNetwork).getSwitchNetworks().size()
+                <= MAXIMUM_ALLOWED_NETWORKS;
     }
 
     @Override
     public void check(Equipment equipment) throws GenericSpecificationException {
-        if(!isSatisfiedBy(equipment))
-            throw new GenericSpecificationException("The max number of networks is "+ NetworkAmountSpec.MAXIMUM_ALLOWED_NETWORKS);
+        if (!isSatisfiedBy(equipment))
+            throw new GenericSpecificationException("The max number of networks is " + NetworkAmountSpec.MAXIMUM_ALLOWED_NETWORKS);
     }
 }

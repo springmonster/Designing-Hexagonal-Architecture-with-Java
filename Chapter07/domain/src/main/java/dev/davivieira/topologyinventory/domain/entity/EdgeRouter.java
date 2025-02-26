@@ -34,7 +34,7 @@ public class EdgeRouter extends Router {
         sameCountryRouterSpec.check(anySwitch);
         sameIpSpec.check(anySwitch);
 
-        this.switches.put(anySwitch.id,anySwitch);
+        this.switches.put(anySwitch.id, anySwitch);
     }
 
     public Switch removeSwitch(Switch anySwitch) {

@@ -13,12 +13,12 @@ import java.util.Scanner;
 
 public class RouterNetworkCLIAdapter extends RouterNetworkAdapter {
 
-    public RouterNetworkCLIAdapter(RouterNetworkUseCase routerNetworkUseCase){
+    public RouterNetworkCLIAdapter(RouterNetworkUseCase routerNetworkUseCase) {
         this.routerNetworkUseCase = routerNetworkUseCase;
     }
 
     @Override
-    public Router processRequest(Object requestParams){
+    public Router processRequest(Object requestParams) {
         var params = stdinParams(requestParams);
         router = this.addNetworkToRouter(params);
         ObjectMapper mapper = new ObjectMapper();
@@ -31,9 +31,9 @@ public class RouterNetworkCLIAdapter extends RouterNetworkAdapter {
         return router;
     }
 
-    private Map<String, String> stdinParams(Object requestParams){
+    private Map<String, String> stdinParams(Object requestParams) {
         Map<String, String> params = new HashMap<>();
-        if(requestParams instanceof Scanner){
+        if (requestParams instanceof Scanner) {
             var scanner = (Scanner) requestParams;
             System.out.println("Please inform the Router ID:");
             var routerId = scanner.nextLine();

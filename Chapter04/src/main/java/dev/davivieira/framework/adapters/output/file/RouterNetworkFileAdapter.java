@@ -21,11 +21,26 @@ public class RouterNetworkFileAdapter implements RouterNetworkOutputPort {
     private InputStream resource;
     private ObjectMapper objectMapper;
 
+    private RouterNetworkFileAdapter() {
+        this.objectMapper = new ObjectMapper();
+        this.resource = getClass().
+                getClassLoader().
+                getResourceAsStream("inventory.json");
+        readJsonFile();
+    }
+
+    public static RouterNetworkFileAdapter getInstance() {
+        if (instance == null) {
+            instance = new RouterNetworkFileAdapter();
+        }
+        return instance;
+    }
+
     @Override
     public Router fetchRouterById(RouterId routerId) {
         Router router = new Router();
-        for(RouterJson routerJson: routers){
-            if(routerJson.getRouterId().equals(routerId.getUUID())){
+        for (RouterJson routerJson : routers) {
+            if (routerJson.getRouterId().equals(routerId.getUUID())) {
                 router = RouterJsonFileMapper.toDomain(routerJson);
                 break;
             }
@@ -47,29 +62,15 @@ public class RouterNetworkFileAdapter implements RouterNetworkOutputPort {
         return true;
     }
 
-    private void readJsonFile(){
+    private void readJsonFile() {
         try {
             this.routers = objectMapper.
                     readValue(
                             resource,
-                            new TypeReference<List<RouterJson>>(){});
+                            new TypeReference<List<RouterJson>>() {
+                            });
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private RouterNetworkFileAdapter() {
-        this.objectMapper = new ObjectMapper();
-        this.resource = getClass().
-                getClassLoader().
-                getResourceAsStream("inventory.json");
-        readJsonFile();
-    }
-
-    public static RouterNetworkFileAdapter getInstance() {
-        if (instance == null) {
-            instance = new RouterNetworkFileAdapter();
-        }
-        return instance;
     }
 }

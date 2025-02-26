@@ -35,7 +35,7 @@ import static dev.davivieira.topologyinventory.domain.vo.Id.withId;
 
 public class RouterMapper {
 
-    public static Router routerDataToDomain(RouterData routerData){
+    public static Router routerDataToDomain(RouterData routerData) {
         var router = RouterFactory.getRouter(
                 withId(routerData.getRouterId().toString()),
                 Vendor.valueOf(routerData.getRouterVendor().toString()),
@@ -43,9 +43,9 @@ public class RouterMapper {
                 IP.fromAddress(routerData.getIp().getAddress()),
                 locationDataToLocation(routerData.getRouterLocation()),
                 RouterType.valueOf(routerData.getRouterType().name()));
-        if(routerData.getRouterParentCoreId()!=null)
-        router.setParentRouterId(Id.withId(routerData.getRouterParentCoreId().toString()));
-        if(routerData.getRouterType().equals(RouterTypeData.CORE)){
+        if (routerData.getRouterParentCoreId() != null)
+            router.setParentRouterId(Id.withId(routerData.getRouterParentCoreId().toString()));
+        if (routerData.getRouterType().equals(RouterTypeData.CORE)) {
             var coreRouter = (CoreRouter) router;
             coreRouter.setRouters(getRoutersFromData(routerData.getRouters()));
             return coreRouter;
@@ -56,7 +56,7 @@ public class RouterMapper {
         }
     }
 
-    public static RouterData routerDomainToData(Router router){
+    public static RouterData routerDomainToData(Router router) {
         var routerData = RouterData.builder().
                 routerId(router.getId().getUuid()).
                 routerVendor(VendorData.valueOf(router.getVendor().toString())).
@@ -65,9 +65,9 @@ public class RouterMapper {
                 routerLocation(locationDomainToLocationData(router.getLocation())).
                 routerType(RouterTypeData.valueOf(router.getRouterType().toString())).
                 build();
-        if(router.getParentRouterId()!=null)
+        if (router.getParentRouterId() != null)
             routerData.setRouterParentCoreId(router.getParentRouterId().getUuid());
-        if(router.getRouterType().equals(RouterType.CORE)) {
+        if (router.getRouterType().equals(RouterType.CORE)) {
             var coreRouter = (CoreRouter) router;
             routerData.setRouters(getRoutersFromDomain(coreRouter.getRouters()));
         } else {
@@ -90,8 +90,8 @@ public class RouterMapper {
                 build();
     }
 
-    public static SwitchData switchDomainToData(Switch aSwitch){
-        return  SwitchData.builder().
+    public static SwitchData switchDomainToData(Switch aSwitch) {
+        return SwitchData.builder().
                 switchId(aSwitch.getId().getUuid()).
                 routerId(aSwitch.getRouterId().getUuid()).
                 switchVendor(VendorData.valueOf(aSwitch.getVendor().toString())).
@@ -103,7 +103,7 @@ public class RouterMapper {
                 build();
     }
 
-    public static Location locationDataToLocation(LocationData locationData){
+    public static Location locationDataToLocation(LocationData locationData) {
         return Location.builder()
                 .address(locationData.getAddress())
                 .city(locationData.getCity())
@@ -115,7 +115,7 @@ public class RouterMapper {
                 .build();
     }
 
-    public static LocationData locationDomainToLocationData(Location location){
+    public static LocationData locationDomainToLocationData(Location location) {
         return LocationData.builder()
                 .address(location.getAddress())
                 .city(location.getCity())
@@ -127,8 +127,8 @@ public class RouterMapper {
                 .build();
     }
 
-    private static Map<Id, Router> getRoutersFromData(Set<RouterData> routerDataList){
-        Map<Id,Router> routerMap = new HashMap<>();
+    private static Map<Id, Router> getRoutersFromData(Set<RouterData> routerDataList) {
+        Map<Id, Router> routerMap = new HashMap<>();
         for (RouterData routerData : routerDataList) {
             routerMap.put(
                     withId(routerData.getRouterId().toString()),
@@ -137,17 +137,17 @@ public class RouterMapper {
         return routerMap;
     }
 
-    private static Set<RouterData>  getRoutersFromDomain(Map<Id, Router> routers){
+    private static Set<RouterData> getRoutersFromDomain(Map<Id, Router> routers) {
         Set<RouterData> routerDataList = new HashSet<>();
-         routers.values().stream().forEach(router -> {
-             var routerData = routerDomainToData(router);
-             routerDataList.add(routerData);
-         });
+        routers.values().stream().forEach(router -> {
+            var routerData = routerDomainToData(router);
+            routerDataList.add(routerData);
+        });
         return routerDataList;
     }
 
-    private static Map<Id, Switch> getSwitchesFromData(List<SwitchData> switchDataList){
-        Map<Id,Switch> switchMap = new HashMap<>();
+    private static Map<Id, Switch> getSwitchesFromData(List<SwitchData> switchDataList) {
+        Map<Id, Switch> switchMap = new HashMap<>();
         for (SwitchData switchData : switchDataList) {
             switchMap.put(
                     withId(switchData.getSwitchId().toString()),
@@ -156,9 +156,9 @@ public class RouterMapper {
         return switchMap;
     }
 
-    private static List<SwitchData>  getSwitchesFromDomain(Map<Id, Switch> switches){
+    private static List<SwitchData> getSwitchesFromDomain(Map<Id, Switch> switches) {
         List<SwitchData> switchDataList = new ArrayList<>();
-        if(switches!=null) {
+        if (switches != null) {
             switches.values().stream().forEach(aSwitch -> {
                 switchDataList.add(switchDomainToData(aSwitch));
             });
@@ -166,9 +166,9 @@ public class RouterMapper {
         return switchDataList;
     }
 
-    private static List<Network> getNetworksFromData(Set<NetworkData> networkData){
+    private static List<Network> getNetworksFromData(Set<NetworkData> networkData) {
         List<Network> networks = new ArrayList<>();
-        networkData.forEach(data ->{
+        networkData.forEach(data -> {
             var network = new Network(
                     IP.fromAddress(data.getIp().getAddress()),
                     data.getName(),
@@ -178,9 +178,9 @@ public class RouterMapper {
         return networks;
     }
 
-    private static Set<NetworkData>  getNetworksFromDomain(List<Network> networks, UUID routerId){
+    private static Set<NetworkData> getNetworksFromDomain(List<Network> networks, UUID routerId) {
         Set<NetworkData> networkDataSet = new HashSet<>();
-        if(networks!=null) {
+        if (networks != null) {
             networks.forEach(network -> {
                 var networkData = new NetworkData(
 

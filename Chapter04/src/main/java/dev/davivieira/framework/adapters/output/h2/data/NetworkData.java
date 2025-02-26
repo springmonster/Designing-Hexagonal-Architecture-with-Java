@@ -1,7 +1,13 @@
 package dev.davivieira.framework.adapters.output.h2.data;
 
-import dev.davivieira.domain.vo.Network;
-import jakarta.persistence.*;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.AttributeOverrides;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,16 +23,8 @@ import java.util.UUID;
 @Entity
 @Table(name = "networks")
 @MappedSuperclass
-@Converter(name="uuidConverter", converterClass= UUIDTypeConverter.class)
+@Converter(name = "uuidConverter", converterClass = UUIDTypeConverter.class)
 public class NetworkData implements Serializable {
-
-    @Id
-    @Column(name="network_id")
-    private int id;
-
-    @Column(name="switch_id")
-    @Convert("uuidConverter")
-    private UUID switchId;
 
     @Embedded
     @AttributeOverrides({
@@ -40,12 +38,16 @@ public class NetworkData implements Serializable {
                             name = "network_protocol")),
     })
     IPData ip;
-
-    @Column(name="network_name")
+    @Column(name = "network_name")
     String name;
-
-    @Column(name="network_cidr")
+    @Column(name = "network_cidr")
     Integer cidr;
+    @Id
+    @Column(name = "network_id")
+    private int id;
+    @Column(name = "switch_id")
+    @Convert("uuidConverter")
+    private UUID switchId;
 
     public NetworkData(UUID switchId, IPData ip, String name, Integer cidr) {
         this.switchId = switchId;

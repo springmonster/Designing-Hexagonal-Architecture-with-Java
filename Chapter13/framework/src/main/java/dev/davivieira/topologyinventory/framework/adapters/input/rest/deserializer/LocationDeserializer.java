@@ -21,6 +21,15 @@ public class LocationDeserializer extends StdDeserializer<Location> {
         super(vc);
     }
 
+    public static Location getLocation(JsonNode jsonNode) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleModule module = new SimpleModule();
+        module.addDeserializer(Location.class, new LocationDeserializer());
+        mapper.registerModule(module);
+        Location location = mapper.readValue(jsonNode.toString(), Location.class);
+        return location;
+    }
+
     @Override
     public Location deserialize(JsonParser jsonParser, DeserializationContext ctxt) throws IOException, JsonProcessingException {
         JsonNode node = jsonParser.getCodec().readTree(jsonParser);
@@ -41,14 +50,5 @@ public class LocationDeserializer extends StdDeserializer<Location> {
                 .latitude(latitude)
                 .longitude(longitude)
                 .build();
-    }
-
-    public static Location getLocation(JsonNode jsonNode) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleModule module = new SimpleModule();
-        module.addDeserializer(Location.class, new LocationDeserializer());
-        mapper.registerModule(module);
-        Location location = mapper.readValue(jsonNode.toString(), Location.class);
-        return location;
     }
 }

@@ -25,7 +25,7 @@ public class RouterViewInputPort implements RouterViewUseCase {
         return fetchRelatedEdgeRouters(type, routers);
     }
 
-    private List<Router> fetchRelatedEdgeRouters(RouterType type, List<Router> routers){
+    private List<Router> fetchRelatedEdgeRouters(RouterType type, List<Router> routers) {
         return RouterSearch.getRouters(type, routers);
     }
 }

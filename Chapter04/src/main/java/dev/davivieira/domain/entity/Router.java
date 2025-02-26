@@ -1,6 +1,9 @@
 package dev.davivieira.domain.entity;
 
-import dev.davivieira.domain.vo.*;
+import dev.davivieira.domain.vo.IP;
+import dev.davivieira.domain.vo.Network;
+import dev.davivieira.domain.vo.RouterId;
+import dev.davivieira.domain.vo.RouterType;
 
 import java.util.List;
 
@@ -10,7 +13,7 @@ public class Router {
     private RouterId id;
     private Switch networkSwitch;
 
-    public Router(){
+    public Router() {
 
     }
 
@@ -25,19 +28,19 @@ public class Router {
         this.networkSwitch = networkSwitch;
     }
 
-    public boolean isType(RouterType type){
+    public boolean isType(RouterType type) {
         return this.type == type;
     }
 
-    public void addNetworkToSwitch(Network network){
+    public void addNetworkToSwitch(Network network) {
         this.networkSwitch = networkSwitch.addNetwork(network, this);
     }
 
-    public Network createNetwork(IP address, String name, int cidr){
+    public Network createNetwork(IP address, String name, int cidr) {
         return new Network(address, name, cidr);
     }
 
-    public List<Network> retrieveNetworks(){
+    public List<Network> retrieveNetworks() {
         return networkSwitch.getNetworks();
     }
 

@@ -10,8 +10,10 @@ import dev.davivieira.framework.adapters.output.file.mappers.RouterJsonFileMappe
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;;
+import java.io.InputStream;
 import java.util.List;
+
+;
 
 public class RouterNetworkFileAdapter implements RouterNetworkOutputPort {
 
@@ -23,12 +25,23 @@ public class RouterNetworkFileAdapter implements RouterNetworkOutputPort {
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
+    private RouterNetworkFileAdapter() {
+        readJsonFile();
+    }
+
+    public static RouterNetworkFileAdapter getInstance() {
+        if (instance == null) {
+            instance = new RouterNetworkFileAdapter();
+        }
+        return instance;
+    }
+
     @Override
     public Router fetchRouterById(RouterId routerId) {
         Router router = new Router();
-        for(RouterJson routerJson: routers){
-            if(routerJson.getRouterId().equals(routerId.getUUID())){
-                    router = RouterJsonFileMapper.toDomain(routerJson);
+        for (RouterJson routerJson : routers) {
+            if (routerJson.getRouterId().equals(routerId.getUUID())) {
+                router = RouterJsonFileMapper.toDomain(routerJson);
                 break;
             }
         }
@@ -47,26 +60,16 @@ public class RouterNetworkFileAdapter implements RouterNetworkOutputPort {
         return true;
     }
 
-    private void readJsonFile(){
+    private void readJsonFile() {
         try {
             this.routers = objectMapper.
                     readValue(
                             resource,
-                            new TypeReference<List<RouterJson>>(){});
+                            new TypeReference<List<RouterJson>>() {
+                            });
             System.out.println(this.routers.get(0).getRouterId());
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private RouterNetworkFileAdapter() {
-        readJsonFile();
-    }
-
-    public static RouterNetworkFileAdapter getInstance() {
-        if (instance == null) {
-            instance = new RouterNetworkFileAdapter();
-        }
-        return instance;
     }
 }

@@ -45,7 +45,7 @@ public class RouterManagementMySQLAdapterTest {
         Assertions.assertSame(router, persistedRouter);
     }
 
-    private Router getRouter(){
+    private Router getRouter() {
         return RouterFactory.getRouter(
                 Id.withoutId(),
                 Vendor.CISCO,

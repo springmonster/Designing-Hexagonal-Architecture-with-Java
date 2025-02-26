@@ -7,21 +7,22 @@ function connect() {
     wsocket.onclose = onclose;
 }
 
-    function onopen() {
+function onopen() {
     console.log("Connected!");
 }
 
-    function onmessage(event) {
+function onmessage(event) {
     console.log("Data received: " + event.data);
     var tag = document.createElement("div");
     tag.id = "message";
-    var text = document.createTextNode(">>"+event.data);
+    var text = document.createTextNode(">>" + event.data);
     tag.appendChild(text);
     var element = document.getElementById("events");
     element.appendChild(tag);
 }
 
-    function onclose(e) {
+function onclose(e) {
     console.log("Connection closed.");
 }
+
 window.addEventListener("load", connect, false);

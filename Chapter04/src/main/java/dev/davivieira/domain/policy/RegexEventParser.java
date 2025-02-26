@@ -6,15 +6,12 @@ import dev.davivieira.domain.vo.EventId;
 import dev.davivieira.domain.vo.Protocol;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class RegexEventParser implements EventParser{
+public class RegexEventParser implements EventParser {
 
     @Override
     public Event parseEvent(String event) {

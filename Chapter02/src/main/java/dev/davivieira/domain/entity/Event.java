@@ -17,20 +17,21 @@ public class Event implements Comparable<Event> {
     private Protocol protocol;
     private Activity activity;
 
-    public Event(OffsetDateTime timestamp, EventId id, Protocol protocol, Activity activity){
+    public Event(OffsetDateTime timestamp, EventId id, Protocol protocol, Activity activity) {
         this.timestamp = timestamp;
         this.id = id;
         this.protocol = protocol;
         this.activity = activity;
     }
 
-    public static Event parsedEvent(String unparsedEvent, ParsePolicyType policy){
+    public static Event parsedEvent(String unparsedEvent, ParsePolicyType policy) {
         switch (policy) {
             case REGEX:
                 return new RegexEventParser().parseEvent(unparsedEvent);
             case SPLIT:
                 return new SplitEventParser().parseEvent(unparsedEvent);
-            default: throw  new IllegalArgumentException("");
+            default:
+                throw new IllegalArgumentException("");
         }
     }
 
@@ -42,7 +43,7 @@ public class Event implements Comparable<Event> {
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Event) {
-            Event event = (Event)obj;
+            Event event = (Event) obj;
             return (event.timestamp.equals(this.timestamp)
                     && event.id.equals(this.id)
                     && event.protocol.equals(this.protocol)

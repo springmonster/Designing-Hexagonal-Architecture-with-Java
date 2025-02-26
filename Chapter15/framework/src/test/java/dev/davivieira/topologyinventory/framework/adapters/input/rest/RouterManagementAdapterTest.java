@@ -24,6 +24,18 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class RouterManagementAdapterTest {
 
+    public static Location createLocation(String country) {
+        return Location.builder().
+                address("Test street").
+                city("Test City").
+                state("Test State").
+                country(country).
+                zipCode(00000).
+                latitude(10F).
+                longitude(-10F).
+                build();
+    }
+
     @Test
     @Order(1)
     public void retrieveRouter() throws IOException {
@@ -122,18 +134,6 @@ public class RouterManagementAdapterTest {
                 .asString();
 
         assertTrue(routerStr.isEmpty());
-    }
-
-    public static Location createLocation(String country){
-        return Location.builder().
-                address("Test street").
-                city("Test City").
-                state("Test State").
-                country(country).
-                zipCode(00000).
-                latitude(10F).
-                longitude(-10F).
-                build();
     }
 }
 

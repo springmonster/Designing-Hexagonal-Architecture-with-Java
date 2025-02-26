@@ -20,26 +20,26 @@ public class App {
     RouterNetworkUseCase usecase;
     RouterNetworkOutputPort outputPort;
 
-    public static void main(String... args)  {
+    public static void main(String... args) {
         var adapter = "cli";
-        if(args.length>0) {
+        if (args.length > 0) {
             adapter = args[0];
         }
         new App().setAdapter(adapter);
     }
 
     void setAdapter(String adapter) {
-        switch (adapter){
+        switch (adapter) {
             case "rest":
                 outputPort = RouterNetworkH2Adapter.getInstance();
                 usecase = new RouterNetworkInputPort(outputPort);
-                inputAdapter= new RouterNetworkRestAdapter(usecase);
+                inputAdapter = new RouterNetworkRestAdapter(usecase);
                 rest();
                 break;
             default:
                 outputPort = RouterNetworkFileAdapter.getInstance();
                 usecase = new RouterNetworkInputPort(outputPort);
-                inputAdapter= new RouterNetworkCLIAdapter(usecase);
+                inputAdapter = new RouterNetworkCLIAdapter(usecase);
                 cli();
         }
     }
@@ -54,7 +54,7 @@ public class App {
             System.out.println("REST endpoint listening on port 8080...");
             var httpserver = HttpServer.create(new InetSocketAddress(8080), 0);
             inputAdapter.processRequest(httpserver);
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

@@ -11,7 +11,6 @@ import dev.davivieira.topologyinventory.domain.vo.RouterType;
 import dev.davivieira.topologyinventory.domain.vo.Vendor;
 
 import javax.enterprise.context.ApplicationScoped;
-
 import javax.inject.Inject;
 
 @ApplicationScoped
@@ -41,7 +40,7 @@ public class RouterManagementGenericAdapter {
                                Model model,
                                IP ip,
                                Location location,
-                               RouterType routerType){
+                               RouterType routerType) {
         var router = routerManagementUseCase.createRouter(
                 null,
                 vendor,

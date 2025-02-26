@@ -35,6 +35,15 @@ public class RouterDeserializer extends StdDeserializer<Router> {
         super(vc);
     }
 
+    public static Router getRouterDeserialized(String jsonStr) throws IOException {
+        var mapper = new ObjectMapper();
+        var module = new SimpleModule();
+        module.addDeserializer(Router.class, new RouterDeserializer());
+        mapper.registerModule(module);
+        var router = mapper.readValue(jsonStr, Router.class);
+        return router;
+    }
+
     @Override
     public Router deserialize(JsonParser jsonParser, DeserializationContext ctxt)
             throws IOException {
@@ -64,7 +73,7 @@ public class RouterDeserializer extends StdDeserializer<Router> {
 
     private void fetchChildRouters(RouterType routerType, JsonNode routersNode, Router router) throws IOException {
         Map<Id, Router> routers = new HashMap<>();
-        if (routerType==RouterType.CORE && routers != null) {
+        if (routerType == RouterType.CORE && routers != null) {
             Iterator<String> childRouters = routersNode.fieldNames();
             while (childRouters.hasNext()) {
                 String childRouter = childRouters.next();
@@ -72,13 +81,13 @@ public class RouterDeserializer extends StdDeserializer<Router> {
                 var fetchedRouter = getRouterDeserialized(routerJsonNode.toString());
                 routers.put(fetchedRouter.getId(), fetchedRouter);
             }
-            ((CoreRouter)router).setRouters(routers);
+            ((CoreRouter) router).setRouters(routers);
         }
     }
 
     private void fetchChildSwitches(RouterType routerType, JsonNode switchesNode, Router router) throws IOException {
         Map<Id, Switch> switches = new HashMap<>();
-        if (routerType==RouterType.EDGE && switches != null) {
+        if (routerType == RouterType.EDGE && switches != null) {
             var childSwitches = switchesNode.fieldNames();
             while (childSwitches.hasNext()) {
                 var childSwitch = childSwitches.next();
@@ -86,16 +95,7 @@ public class RouterDeserializer extends StdDeserializer<Router> {
                 var fetchedSwitch = getSwitchDeserialized(switchJsonNode.toString());
                 switches.put(fetchedSwitch.getId(), fetchedSwitch);
             }
-            ((EdgeRouter)router).setSwitches(switches);
+            ((EdgeRouter) router).setSwitches(switches);
         }
-    }
-
-    public static Router getRouterDeserialized(String jsonStr) throws IOException {
-        var mapper = new ObjectMapper();
-        var module = new SimpleModule();
-        module.addDeserializer(Router.class, new RouterDeserializer());
-        mapper.registerModule(module);
-        var router = mapper.readValue(jsonStr, Router.class);
-        return router;
     }
 }

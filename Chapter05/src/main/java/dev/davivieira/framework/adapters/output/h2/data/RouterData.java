@@ -1,11 +1,23 @@
 package dev.davivieira.framework.adapters.output.h2.data;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.SecondaryTable;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.eclipse.persistence.annotations.Convert;
 import org.eclipse.persistence.annotations.Converter;
+
 import java.io.Serializable;
 import java.util.UUID;
 
@@ -16,17 +28,17 @@ import java.util.UUID;
 @Table(name = "routers")
 @SecondaryTable(name = "switches")
 @MappedSuperclass
-@Converter(name="uuidConverter", converterClass= UUIDTypeConverter.class)
+@Converter(name = "uuidConverter", converterClass = UUIDTypeConverter.class)
 public class RouterData implements Serializable {
 
     @Id
-    @Column(name="router_id", columnDefinition = "uuid", updatable = false )
+    @Column(name = "router_id", columnDefinition = "uuid", updatable = false)
     @Convert("uuidConverter")
     private UUID routerId;
 
     @Embedded
     @Enumerated(EnumType.STRING)
-    @Column(name="router_type")
+    @Column(name = "router_type")
     private RouterTypeData routerType;
 
 

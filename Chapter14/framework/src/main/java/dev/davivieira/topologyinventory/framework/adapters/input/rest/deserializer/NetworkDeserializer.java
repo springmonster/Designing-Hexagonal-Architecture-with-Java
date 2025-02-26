@@ -21,6 +21,15 @@ public class NetworkDeserializer extends StdDeserializer<Network> {
         super(vc);
     }
 
+    public static Network getNetworkDeserialized(String jsonStr) throws IOException {
+        var mapper = new ObjectMapper();
+        var module = new SimpleModule();
+        module.addDeserializer(Network.class, new NetworkDeserializer());
+        mapper.registerModule(module);
+        var network = mapper.readValue(jsonStr, Network.class);
+        return network;
+    }
+
     @Override
     public Network deserialize(JsonParser jsonParser, DeserializationContext ctxt) throws IOException {
         JsonNode node = jsonParser.getCodec().readTree(jsonParser);
@@ -32,14 +41,5 @@ public class NetworkDeserializer extends StdDeserializer<Network> {
                 .networkName(networkName)
                 .networkCidr(networkCidr)
                 .build();
-    }
-
-    public static Network getNetworkDeserialized(String jsonStr) throws IOException {
-        var mapper = new ObjectMapper();
-        var module = new SimpleModule();
-        module.addDeserializer(Network.class, new NetworkDeserializer());
-        mapper.registerModule(module);
-        var network = mapper.readValue(jsonStr, Network.class);
-        return network;
     }
 }

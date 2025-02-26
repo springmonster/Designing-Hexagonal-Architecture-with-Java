@@ -15,11 +15,11 @@ public class NetworkManagementGenericAdapter {
     private SwitchManagementUseCase switchManagementUseCase;
     private NetworkManagementUseCase networkManagementUseCase;
 
-    public NetworkManagementGenericAdapter(){
+    public NetworkManagementGenericAdapter() {
         setPorts();
     }
 
-    private void setPorts(){
+    private void setPorts() {
         this.switchManagementUseCase = new SwitchManagementInputPort(SwitchManagementH2Adapter.getInstance());
         this.networkManagementUseCase = new NetworkManagementInputPort(RouterManagementH2Adapter.getInstance());
     }

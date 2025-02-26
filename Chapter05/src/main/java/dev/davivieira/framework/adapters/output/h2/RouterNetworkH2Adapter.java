@@ -17,8 +17,15 @@ public class RouterNetworkH2Adapter implements RouterNetworkOutputPort {
     @PersistenceContext
     private EntityManager em;
 
-    private RouterNetworkH2Adapter(){
+    private RouterNetworkH2Adapter() {
         setUpH2Database();
+    }
+
+    public static RouterNetworkH2Adapter getInstance() {
+        if (instance == null) {
+            instance = new RouterNetworkH2Adapter();
+        }
+        return instance;
     }
 
     @Override
@@ -38,12 +45,5 @@ public class RouterNetworkH2Adapter implements RouterNetworkOutputPort {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("inventory");
         EntityManager em = entityManagerFactory.createEntityManager();
         this.em = em;
-    }
-
-    public static RouterNetworkH2Adapter getInstance() {
-        if (instance == null) {
-            instance = new RouterNetworkH2Adapter();
-        }
-        return instance;
     }
 }

@@ -15,17 +15,17 @@ public class Switch {
     private List<Network> networks;
     private IP address;
 
-    public Switch (SwitchId switchId, SwitchType switchType, List<Network> networks, IP address){
+    public Switch(SwitchId switchId, SwitchType switchType, List<Network> networks, IP address) {
         this.switchId = switchId;
         this.switchType = switchType;
         this.networks = networks;
         this.address = address;
     }
 
-    public Switch addNetwork(Network network, Router router){
+    public Switch addNetwork(Network network, Router router) {
         List<Network> newNetworks = new ArrayList<>();
 
-        router.retrieveNetworks().forEach(net ->{
+        router.retrieveNetworks().forEach(net -> {
             newNetworks.add(net);
         });
 

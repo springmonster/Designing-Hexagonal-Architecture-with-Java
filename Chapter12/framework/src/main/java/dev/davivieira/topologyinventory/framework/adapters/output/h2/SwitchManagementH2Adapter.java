@@ -18,7 +18,7 @@ public class SwitchManagementH2Adapter implements SwitchManagementOutputPort {
     @PersistenceContext
     private EntityManager em;
 
-    public SwitchManagementH2Adapter(){
+    public SwitchManagementH2Adapter() {
         setUpH2Database();
     }
 

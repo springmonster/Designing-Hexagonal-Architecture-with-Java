@@ -17,7 +17,7 @@ public class NetworkManagementInputPort implements NetworkManagementUseCase {
 
     RouterManagementOutputPort routerManagementOutputPort;
 
-    public NetworkManagementInputPort(RouterManagementOutputPort routerNetworkOutputPort){
+    public NetworkManagementInputPort(RouterManagementOutputPort routerNetworkOutputPort) {
         this.routerManagementOutputPort = routerNetworkOutputPort;
     }
 

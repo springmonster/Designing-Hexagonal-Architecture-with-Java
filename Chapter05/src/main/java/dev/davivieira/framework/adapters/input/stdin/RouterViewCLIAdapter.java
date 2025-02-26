@@ -12,7 +12,7 @@ public class RouterViewCLIAdapter {
 
     RouterViewUseCase routerViewUseCase;
 
-    public RouterViewCLIAdapter(){
+    public RouterViewCLIAdapter() {
         setAdapters();
     }
 
@@ -21,7 +21,7 @@ public class RouterViewCLIAdapter {
         return routerViewUseCase.getRelatedRouters(relatedRoutersCommand);
     }
 
-    private void setAdapters(){
+    private void setAdapters() {
         this.routerViewUseCase = new RouterViewInputPort(RouterViewFileAdapter.getInstance());
     }
 }

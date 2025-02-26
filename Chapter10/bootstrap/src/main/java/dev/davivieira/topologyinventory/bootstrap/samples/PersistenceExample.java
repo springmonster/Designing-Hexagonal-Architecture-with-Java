@@ -18,11 +18,11 @@ public class PersistenceExample {
         sampleEntity.setField(sampleObject.field);
         sampleEntity.setValue(sampleObject.value);
         em.persist(sampleEntity);
-        return "Entity with field "+sampleObject.field+" created!";
+        return "Entity with field " + sampleObject.field + " created!";
     }
 
     @Transactional
-    public List<SampleEntity> getAllEntities(){
+    public List<SampleEntity> getAllEntities() {
         return em.createNamedQuery("SampleEntity.findAll", SampleEntity.class)
                 .getResultList();
     }

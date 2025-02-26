@@ -3,7 +3,12 @@ package dev.davivieira.topologyinventory.application.usecases;
 import dev.davivieira.topologyinventory.application.ports.output.SwitchManagementOutputPort;
 import dev.davivieira.topologyinventory.domain.entity.EdgeRouter;
 import dev.davivieira.topologyinventory.domain.entity.Switch;
-import dev.davivieira.topologyinventory.domain.vo.*;
+import dev.davivieira.topologyinventory.domain.vo.IP;
+import dev.davivieira.topologyinventory.domain.vo.Id;
+import dev.davivieira.topologyinventory.domain.vo.Location;
+import dev.davivieira.topologyinventory.domain.vo.Model;
+import dev.davivieira.topologyinventory.domain.vo.SwitchType;
+import dev.davivieira.topologyinventory.domain.vo.Vendor;
 
 public interface SwitchManagementUseCase {
 
@@ -15,7 +20,7 @@ public interface SwitchManagementUseCase {
             IP ip,
             Location location,
             SwitchType switchType
-            );
+    );
 
     Switch retrieveSwitch(Id id);
 

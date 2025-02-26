@@ -9,9 +9,11 @@ import io.cucumber.java.en.Then;
 
 import javax.inject.Inject;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
-public class SwitchRemove extends ApplicationTestData{
+public class SwitchRemove extends ApplicationTestData {
 
     @Inject
     SwitchManagementUseCase switchManagementUseCase;
@@ -19,22 +21,24 @@ public class SwitchRemove extends ApplicationTestData{
     Id id;
     Switch switchToBeRemoved;
 
-    public SwitchRemove(){
+    public SwitchRemove() {
         loadData();
     }
 
     @Given("I know the switch I want to remove")
-    public void i_know_the_switch_i_want_to_remove(){
+    public void i_know_the_switch_i_want_to_remove() {
         id = Id.withId("f8c3de3d-1fea-4d7c-a8b0-29f63c4c3490");
         switchToBeRemoved = edgeRouter.getSwitches().get(id);
     }
+
     @And("The switch has no networks")
     public void the_switch_has_no_networks() {
         switchToBeRemoved.removeNetworkFromSwitch(network);
         assertTrue(switchToBeRemoved.getSwitchNetworks().isEmpty());
     }
+
     @Then("I remove the switch from the edge router")
-    public void i_remove_the_switch_from_the_edge_router(){
+    public void i_remove_the_switch_from_the_edge_router() {
         assertNotNull(edgeRouter);
         edgeRouter = this.switchManagementUseCase.
                 removeSwitchFromEdgeRouter(switchToBeRemoved, edgeRouter);

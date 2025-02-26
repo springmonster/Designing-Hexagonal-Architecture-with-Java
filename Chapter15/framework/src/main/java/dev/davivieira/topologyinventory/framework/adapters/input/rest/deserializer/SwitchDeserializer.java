@@ -31,6 +31,15 @@ public class SwitchDeserializer extends StdDeserializer<Switch> {
         super(vc);
     }
 
+    public static Switch getSwitchDeserialized(String jsonStr) throws IOException {
+        var mapper = new ObjectMapper();
+        var module = new SimpleModule();
+        module.addDeserializer(Switch.class, new SwitchDeserializer());
+        mapper.registerModule(module);
+        var networkSwitch = mapper.readValue(jsonStr, Switch.class);
+        return networkSwitch;
+    }
+
     @Override
     public Switch deserialize(JsonParser jsonParser, DeserializationContext ctxt) throws IOException {
         JsonNode node = jsonParser.getCodec().readTree(jsonParser);
@@ -69,14 +78,5 @@ public class SwitchDeserializer extends StdDeserializer<Switch> {
             }
             networkSwitch.setSwitchNetworks(networks);
         }
-    }
-
-    public static Switch getSwitchDeserialized(String jsonStr) throws IOException {
-        var mapper = new ObjectMapper();
-        var module = new SimpleModule();
-        module.addDeserializer(Switch.class, new SwitchDeserializer());
-        mapper.registerModule(module);
-        var networkSwitch = mapper.readValue(jsonStr, Switch.class);
-        return networkSwitch;
     }
 }

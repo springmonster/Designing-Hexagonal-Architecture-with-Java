@@ -1,6 +1,5 @@
 package dev.davivieira.topologyinventory.framework.adapters.input.rest.outputAdapters;
 
-import dev.davivieira.topologyinventory.domain.entity.Router;
 import dev.davivieira.topologyinventory.domain.entity.Switch;
 import dev.davivieira.topologyinventory.domain.vo.IP;
 import dev.davivieira.topologyinventory.domain.vo.Id;
@@ -29,7 +28,7 @@ public class SwitchManagementMySQLAdapterTest {
 
     }
 
-    Switch getSwitch(){
+    Switch getSwitch() {
         return Switch.builder()
                 .switchId(Id.withoutId())
                 .switchType(SwitchType.LAYER3)

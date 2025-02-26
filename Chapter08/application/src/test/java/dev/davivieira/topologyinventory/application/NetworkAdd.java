@@ -12,12 +12,12 @@ import static org.junit.Assert.assertNotNull;
 
 public class NetworkAdd extends ApplicationTestData {
 
-    public NetworkAdd(){
+    public NetworkAdd() {
         loadData();
     }
 
     @Given("I have a network")
-    public void i_have_a_network(){
+    public void i_have_a_network() {
         network = networkManagementUseCase.createNetwork(
                 IP.fromAddress("10.0.0.1"),
                 "Finance",
@@ -27,12 +27,12 @@ public class NetworkAdd extends ApplicationTestData {
     }
 
     @And("I have a switch to add a network")
-    public void i_have_a_switch_to_add_a_network(){
+    public void i_have_a_switch_to_add_a_network() {
         assertNotNull(networkSwitch);
     }
 
     @Then("I add the network to the switch")
-    public void i_add_the_network_to_the_switch(){
+    public void i_add_the_network_to_the_switch() {
         var predicate = Network.getNetworkNamePredicate("Finance");
         var networks = this.
                 networkManagementUseCase.

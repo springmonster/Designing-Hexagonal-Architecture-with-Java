@@ -29,11 +29,13 @@ public class SwitchManagementInputPort implements SwitchManagementUseCase {
                 .switchType(switchType)
                 .build();
     }
+
     @Override
     public EdgeRouter addSwitchToEdgeRouter(Switch networkSwitch, EdgeRouter edgeRouter) {
         edgeRouter.addSwitch(networkSwitch);
         return edgeRouter;
     }
+
     @Override
     public EdgeRouter removeSwitchFromEdgeRouter(Switch networkSwitch, EdgeRouter edgeRouter) {
         edgeRouter.removeSwitch(networkSwitch);

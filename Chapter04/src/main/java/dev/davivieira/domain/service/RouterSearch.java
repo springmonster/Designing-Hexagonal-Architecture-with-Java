@@ -11,7 +11,7 @@ public class RouterSearch {
     public static List<Router> getRouters(RouterType type, List<Router> routers) {
         var routersList = new ArrayList<Router>();
         routers.forEach(router -> {
-            if(router.isType(type)){
+            if (router.isType(type)) {
                 routersList.add(router);
             }
         });

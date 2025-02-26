@@ -27,6 +27,7 @@ public class RouterManagementInputPort implements RouterManagementUseCase {
         return RouterFactory.getRouter(null,
                 vendor, model, ip, location, routerType);
     }
+
     @Override
     public Router retrieveRouter(Id id) {
         return routerManagementOutputPort.retrieveRouter(id);
@@ -39,9 +40,10 @@ public class RouterManagementInputPort implements RouterManagementUseCase {
 
     @Override
     public CoreRouter addRouterToCoreRouter(Router router, CoreRouter coreRouter) {
-        var addedRouter =  coreRouter.addRouter(router);
+        var addedRouter = coreRouter.addRouter(router);
         return addedRouter;
     }
+
     @Override
     public Router removeRouterFromCoreRouter(Router router, CoreRouter coreRouter) {
         var removedRouter = coreRouter.removeRouter(router);

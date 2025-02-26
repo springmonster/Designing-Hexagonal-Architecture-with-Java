@@ -12,16 +12,16 @@ import static junit.framework.TestCase.assertNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class NetworkRemove extends ApplicationTestData{
+public class NetworkRemove extends ApplicationTestData {
 
     Predicate<Network> predicate;
 
-    public NetworkRemove(){
+    public NetworkRemove() {
         loadData();
     }
 
     @Given("I know the network I want to remove")
-    public void i_know_the_network_i_want_to_remove(){
+    public void i_know_the_network_i_want_to_remove() {
         predicate = Network.
                 getNetworkNamePredicate("TestNetwork");
         network = NetworkService.
@@ -30,12 +30,12 @@ public class NetworkRemove extends ApplicationTestData{
     }
 
     @And("I have a switch to remove a network")
-    public void i_have_a_switch_to_remove_a_network(){
+    public void i_have_a_switch_to_remove_a_network() {
         assertNotNull(networkSwitch);
     }
 
     @Then("I remove the network from the switch")
-    public void i_remove_the_network_from_the_switch(){
+    public void i_remove_the_network_from_the_switch() {
         this.networkManagementUseCase.
                 removeNetworkFromSwitch("Marketing", networkSwitch);
         network = NetworkService.

@@ -1,6 +1,18 @@
 package dev.davivieira.topologyinventory.framework.adapters.output.h2.data;
 
-import jakarta.persistence.*;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.AttributeOverrides;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,28 +31,28 @@ import java.util.UUID;
 @Entity
 @Table(name = "switches")
 @MappedSuperclass
-@Converter(name="uuidConverter", converterClass= UUIDTypeConverter.class)
+@Converter(name = "uuidConverter", converterClass = UUIDTypeConverter.class)
 public class SwitchData implements Serializable {
 
     @Id
-    @Column(name="switch_id",
+    @Column(name = "switch_id",
             columnDefinition = "uuid",
-            updatable = false )
+            updatable = false)
     @Convert("uuidConverter")
     private UUID switchId;
 
-    @Column(name="router_id")
+    @Column(name = "router_id")
     @Convert("uuidConverter")
     private UUID routerId;
 
     @Embedded
     @Enumerated(EnumType.STRING)
-    @Column(name="switch_vendor")
+    @Column(name = "switch_vendor")
     private VendorData switchVendor;
 
     @Embedded
     @Enumerated(EnumType.STRING)
-    @Column(name="switch_model")
+    @Column(name = "switch_model")
     private ModelData switchModel;
 
     @Enumerated(EnumType.STRING)
@@ -68,6 +80,6 @@ public class SwitchData implements Serializable {
     private IPData ip;
 
     @ManyToOne
-    @JoinColumn(name="location_id")
+    @JoinColumn(name = "location_id")
     private LocationData switchLocation;
 }

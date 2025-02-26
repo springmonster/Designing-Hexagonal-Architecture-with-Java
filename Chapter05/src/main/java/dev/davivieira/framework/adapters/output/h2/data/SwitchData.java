@@ -1,6 +1,18 @@
 package dev.davivieira.framework.adapters.output.h2.data;
 
-import jakarta.persistence.*;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.AttributeOverrides;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.SecondaryTable;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,15 +30,15 @@ import java.util.UUID;
 @Table(name = "switches")
 @SecondaryTable(name = "networks")
 @MappedSuperclass
-@Converter(name="uuidConverter", converterClass= UUIDTypeConverter.class)
+@Converter(name = "uuidConverter", converterClass = UUIDTypeConverter.class)
 public class SwitchData implements Serializable {
 
     @Id
-    @Column(name="switch_id", columnDefinition = "uuid", updatable = false )
+    @Column(name = "switch_id", columnDefinition = "uuid", updatable = false)
     @Convert("uuidConverter")
     private UUID switchId;
 
-    @Column(name="router_id")
+    @Column(name = "router_id")
     @Convert("uuidConverter")
     private UUID routerId;
 
@@ -41,8 +53,8 @@ public class SwitchData implements Serializable {
 
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride( name = "address", column = @Column(name = "switch_ip_address")),
-            @AttributeOverride( name = "protocol", column = @Column(name = "switch_ip_protocol")),
+            @AttributeOverride(name = "address", column = @Column(name = "switch_ip_address")),
+            @AttributeOverride(name = "protocol", column = @Column(name = "switch_ip_protocol")),
     })
     private IPData ip;
 }

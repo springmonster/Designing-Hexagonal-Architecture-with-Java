@@ -2,8 +2,8 @@
 <head>
     <title>Topology & Inventory | Get Router</title>
     <meta charset="UTF-8">
-    <meta name="description" content="Topology & Inventory">
-    <link rel="stylesheet" href="css/main.css">
+    <meta content="Topology & Inventory" name="description">
+    <link href="css/main.css" rel="stylesheet">
     <script src="js/nav.js"></script>
 </head>
 <body>
@@ -22,11 +22,12 @@
                         <form name="router" onsubmit="return false;">
                             <div class="row">
                                 <div class="col-75">
-                                    <input type="text" id="routerId" name="routerId" placeholder="Enter the router id">
+                                    <input id="routerId" name="routerId" placeholder="Enter the router id" type="text">
                                 </div>
                             </div>
                             <div class="row">
-                                <input class="submit-btn" id="go-button" type="submit" value="Submit" onclick="getRouter()">
+                                <input id="go-button" class="submit-btn" onclick="getRouter()" type="submit"
+                                       value="Submit">
                             </div>
                         </form>
                     </div>

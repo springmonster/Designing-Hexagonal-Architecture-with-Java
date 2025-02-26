@@ -4,11 +4,11 @@ public class RouterId {
 
     private String id;
 
-    private RouterId(String id){
+    private RouterId(String id) {
         this.id = id;
     }
 
-    public static RouterId of(String id){
+    public static RouterId of(String id) {
         return new RouterId(id);
     }
 

@@ -13,8 +13,9 @@ import org.junit.jupiter.api.TestMethodOrder;
 
 import java.util.function.Predicate;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class NetworkTest extends FrameworkTestData {
@@ -22,23 +23,25 @@ public class NetworkTest extends FrameworkTestData {
     NetworkManagementGenericAdapter networkManagementGenericAdapter;
     SwitchManagementGenericAdapter switchManagementGenericAdapter;
 
-    public NetworkTest(){
+    public NetworkTest() {
         this.networkManagementGenericAdapter = new NetworkManagementGenericAdapter();
         this.switchManagementGenericAdapter = new SwitchManagementGenericAdapter();
         loadData();
     }
+
     @Test
     @Order(1)
-    public void addNetworkToSwitch(){
+    public void addNetworkToSwitch() {
         Id switchId = Id.withId("922dbcd5-d071-41bd-920b-00f83eb4bb46");
         Switch networkSwitch = networkManagementGenericAdapter.addNetworkToSwitch(network, switchId);
         Predicate<Network> predicate = Network.getNetworkNamePredicate("TestNetwork");
         Network actualNetwork = NetworkService.findNetwork(networkSwitch.getSwitchNetworks(), predicate);
         assertEquals(network, actualNetwork);
     }
+
     @Test
     @Order(2)
-    public void removeNetworkFromSwitch(){
+    public void removeNetworkFromSwitch() {
         Id switchId = Id.withId("922dbcd5-d071-41bd-920b-00f83eb4bb46");
         var networkName = "HR";
         Predicate<Network> predicate = Network.getNetworkNamePredicate(networkName);

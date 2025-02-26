@@ -34,18 +34,18 @@ public class SwitchData {
     private RouterData router;
 
     @Id
-    @Column(name="switch_id", columnDefinition = "BINARY(16)")
+    @Column(name = "switch_id", columnDefinition = "BINARY(16)")
     private UUID switchId;
 
-    @Column(name="router_id", columnDefinition = "BINARY(16)")
+    @Column(name = "router_id", columnDefinition = "BINARY(16)")
     private UUID routerId;
 
     @Enumerated(EnumType.STRING)
-    @Column(name="switch_vendor")
+    @Column(name = "switch_vendor")
     private VendorData switchVendor;
 
     @Enumerated(EnumType.STRING)
-    @Column(name="switch_model")
+    @Column(name = "switch_model")
     private ModelData switchModel;
 
     @Enumerated(EnumType.STRING)
@@ -53,7 +53,7 @@ public class SwitchData {
     private SwitchTypeData switchType;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name="switch_id")
+    @JoinColumn(name = "switch_id")
     private Set<NetworkData> networks;
 
     @Embedded
@@ -70,6 +70,6 @@ public class SwitchData {
     private IPData ip;
 
     @ManyToOne
-    @JoinColumn(name="location_id")
+    @JoinColumn(name = "location_id")
     private LocationData switchLocation;
 }

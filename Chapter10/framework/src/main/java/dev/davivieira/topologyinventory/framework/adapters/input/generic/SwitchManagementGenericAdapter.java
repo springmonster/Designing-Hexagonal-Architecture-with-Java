@@ -18,8 +18,8 @@ public class SwitchManagementGenericAdapter {
     private SwitchManagementUseCase switchManagementUseCase;
     private RouterManagementUseCase routerManagementUseCase;
 
-    public SwitchManagementGenericAdapter (
-            RouterManagementUseCase routerManagementUseCase, SwitchManagementUseCase switchManagementUseCase){
+    public SwitchManagementGenericAdapter(
+            RouterManagementUseCase routerManagementUseCase, SwitchManagementUseCase switchManagementUseCase) {
         this.routerManagementUseCase = routerManagementUseCase;
         this.switchManagementUseCase = switchManagementUseCase;
     }
@@ -44,7 +44,7 @@ public class SwitchManagementGenericAdapter {
     ) {
         Switch newSwitch = switchManagementUseCase.createSwitch(vendor, model, ip, location, switchType);
         Router edgeRouter = routerManagementUseCase.retrieveRouter(routerId);
-        if(!edgeRouter.getRouterType().equals(RouterType.EDGE))
+        if (!edgeRouter.getRouterType().equals(RouterType.EDGE))
             throw new UnsupportedOperationException("Please inform the id of an edge router to add a switch");
         Router router = switchManagementUseCase.addSwitchToEdgeRouter(newSwitch, (EdgeRouter) edgeRouter);
         return (EdgeRouter) routerManagementUseCase.persistRouter(router);

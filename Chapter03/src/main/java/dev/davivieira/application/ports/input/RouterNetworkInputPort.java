@@ -11,7 +11,7 @@ public class RouterNetworkInputPort implements RouterNetworkUseCase {
 
     private final RouterNetworkOutputPort routerNetworkOutputPort;
 
-    public RouterNetworkInputPort(RouterNetworkOutputPort routerNetworkOutputPort){
+    public RouterNetworkInputPort(RouterNetworkOutputPort routerNetworkOutputPort) {
         this.routerNetworkOutputPort = routerNetworkOutputPort;
     }
 

@@ -26,26 +26,26 @@ public class App {
 
     public static void main(String... args) throws IOException, InterruptedException {
         var adapter = "cli";
-        if(args.length>0) {
+        if (args.length > 0) {
             adapter = args[0];
         }
         new App().setAdapter(adapter);
     }
 
     void setAdapter(String adapter) throws IOException, InterruptedException {
-        switch (adapter){
+        switch (adapter) {
             case "rest":
                 routerOutputPort = RouterNetworkH2Adapter.getInstance();
                 notifyOutputPort = NotifyEventKafkaAdapter.getInstance();
                 usecase = new RouterNetworkInputPort(routerOutputPort, notifyOutputPort);
-                inputAdapter= new RouterNetworkRestAdapter(usecase);
+                inputAdapter = new RouterNetworkRestAdapter(usecase);
                 rest();
                 NotifyEventWebSocketAdapter.startServer();
                 break;
             default:
                 routerOutputPort = RouterNetworkFileAdapter.getInstance();
                 usecase = new RouterNetworkInputPort(routerOutputPort);
-                inputAdapter= new RouterNetworkCLIAdapter(usecase);
+                inputAdapter = new RouterNetworkCLIAdapter(usecase);
                 cli();
         }
     }
@@ -60,7 +60,7 @@ public class App {
             System.out.println("REST endpoint listening on port 8080...");
             var httpserver = HttpServer.create(new InetSocketAddress(8080), 0);
             inputAdapter.processRequest(httpserver);
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

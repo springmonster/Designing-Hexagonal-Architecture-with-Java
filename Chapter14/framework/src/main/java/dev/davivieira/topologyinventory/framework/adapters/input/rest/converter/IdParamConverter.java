@@ -7,8 +7,8 @@ import javax.ws.rs.ext.ParamConverter;
 public class IdParamConverter implements ParamConverter<Id> {
 
     @Override
-    public Id fromString(String value){
-       return Id.withId(value);
+    public Id fromString(String value) {
+        return Id.withId(value);
     }
 
     @Override

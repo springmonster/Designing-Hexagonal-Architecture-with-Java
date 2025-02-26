@@ -19,11 +19,13 @@ public class NetworkManagementInputPort implements NetworkManagementUseCase {
                 .networkCidr(networkCidr)
                 .build();
     }
+
     @Override
     public Switch addNetworkToSwitch(Network network, Switch networkSwitch) {
         networkSwitch.addNetworkToSwitch(network);
         return networkSwitch;
     }
+
     @Override
     public Switch removeNetworkFromSwitch(Network network, Switch networkSwitch) {
         networkSwitch.removeNetworkFromSwitch(network);

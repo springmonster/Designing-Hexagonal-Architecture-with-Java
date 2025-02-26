@@ -17,12 +17,12 @@ public class RouterFactory {
                                    Model model,
                                    IP ip,
                                    Location location,
-                                   RouterType routerType){
+                                   RouterType routerType) {
 
-        switch (routerType){
+        switch (routerType) {
             case CORE:
                 return CoreRouter.builder().
-                        id(id==null ? Id.withoutId():id).
+                        id(id == null ? Id.withoutId() : id).
                         vendor(vendor).
                         model(model).
                         ip(ip).
@@ -31,7 +31,7 @@ public class RouterFactory {
                         build();
             case EDGE:
                 return EdgeRouter.builder().
-                        id(id==null ? Id.withoutId():id).
+                        id(id == null ? Id.withoutId() : id).
                         vendor(vendor).
                         model(model).
                         ip(ip).

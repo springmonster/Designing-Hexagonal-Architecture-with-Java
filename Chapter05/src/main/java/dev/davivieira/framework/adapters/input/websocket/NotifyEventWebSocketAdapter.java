@@ -16,6 +16,25 @@ public class NotifyEventWebSocketAdapter extends WebSocketServer {
         super(address);
     }
 
+    public static void startServer() throws IOException, InterruptedException {
+        var ws = new NotifyEventWebSocketAdapter(
+                new InetSocketAddress("localhost", 8887));
+        ws.setReuseAddr(true);
+        ws.start();
+        System.out.println("Topology & Inventory" +
+                " webSocket started on port: " + ws.getPort());
+        BufferedReader sysin =
+                new BufferedReader(new InputStreamReader(System.in));
+        while (true) {
+            String in = sysin.readLine();
+            ws.broadcast(in);
+            if (in.equals("exit")) {
+                ws.stop();
+                break;
+            }
+        }
+    }
+
     @Override
     public void onOpen(WebSocket conn, ClientHandshake handshake) {
         System.out.println(
@@ -36,25 +55,6 @@ public class NotifyEventWebSocketAdapter extends WebSocketServer {
     public void onMessage(WebSocket conn, ByteBuffer message) {
         broadcast(message.array());
         System.out.println(conn + ": " + message);
-    }
-
-    public static void startServer() throws IOException, InterruptedException {
-        var ws = new NotifyEventWebSocketAdapter(
-                new InetSocketAddress("localhost", 8887));
-        ws.setReuseAddr(true);
-        ws.start();
-        System.out.println("Topology & Inventory" +
-                " webSocket started on port: " + ws.getPort());
-        BufferedReader sysin =
-                new BufferedReader(new InputStreamReader(System.in));
-        while (true) {
-            String in = sysin.readLine();
-            ws.broadcast(in);
-            if (in.equals("exit")) {
-                ws.stop();
-                break;
-            }
-        }
     }
 
     @Override

@@ -9,7 +9,7 @@ import dev.davivieira.topologyinventory.domain.vo.Vendor;
 
 public class RouterInfo {
 
-    public String getRouterStatus () {
+    public String getRouterStatus() {
         var router = RouterFactory.getRouter(
                 Id.withoutId(),
                 Vendor.CISCO,
@@ -17,6 +17,6 @@ public class RouterInfo {
                 IP.fromAddress("55.0.0.1"),
                 null,
                 RouterType.CORE);
-        return "Router with "+router.getIp()+" is alive!";
+        return "Router with " + router.getIp() + " is alive!";
     }
 }

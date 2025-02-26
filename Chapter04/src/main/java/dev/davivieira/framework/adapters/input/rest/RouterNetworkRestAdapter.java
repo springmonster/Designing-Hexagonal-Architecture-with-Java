@@ -9,22 +9,35 @@ import dev.davivieira.framework.adapters.output.file.mappers.RouterJsonFileMappe
 
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
-import java.util.*;
+import java.net.URLDecoder;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
-import static java.util.stream.Collectors.*;
-import java.net.URLDecoder;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.mapping;
+import static java.util.stream.Collectors.toList;
 
 public class RouterNetworkRestAdapter extends RouterNetworkAdapter {
 
-    public RouterNetworkRestAdapter(RouterNetworkUseCase routerNetworkUseCase){
+    public RouterNetworkRestAdapter(RouterNetworkUseCase routerNetworkUseCase) {
         this.routerNetworkUseCase = routerNetworkUseCase;
     }
 
+    private static String decode(final String encoded) {
+        try {
+            return encoded == null ? null : URLDecoder.decode(encoded, "UTF-8");
+        } catch (final UnsupportedEncodingException e) {
+            throw new RuntimeException("UTF-8 is a required encoding", e);
+        }
+    }
+
     @Override
-    public Router processRequest(Object requestParams){
+    public Router processRequest(Object requestParams) {
         Map<String, String> params = new HashMap<>();
-        if(requestParams instanceof HttpServer) {
+        if (requestParams instanceof HttpServer) {
             var httpserver = (HttpServer) requestParams;
             httpserver.createContext("/network/add", (exchange -> {
                 if ("GET".equals(exchange.getRequestMethod())) {
@@ -55,20 +68,12 @@ public class RouterNetworkRestAdapter extends RouterNetworkAdapter {
                 .map(s -> Arrays.copyOf(s.split("="), 2))
                 .collect(groupingBy(s -> decode(s[0]), mapping(s -> decode(s[1]), toList())));
         var routerId = requestParams.getOrDefault("routerId", List.of(noNameText)).stream().findFirst().orElse(noNameText);
-        params.put("routerId",routerId);
+        params.put("routerId", routerId);
         var address = requestParams.getOrDefault("address", List.of(noNameText)).stream().findFirst().orElse(noNameText);
-        params.put("address",address);
+        params.put("address", address);
         var name = requestParams.getOrDefault("name", List.of(noNameText)).stream().findFirst().orElse(noNameText);
-        params.put("name",name);
+        params.put("name", name);
         var cidr = requestParams.getOrDefault("cidr", List.of(noNameText)).stream().findFirst().orElse(noNameText);
-        params.put("cidr",cidr);
-    }
-
-    private static String decode(final String encoded) {
-        try {
-            return encoded == null ? null : URLDecoder.decode(encoded, "UTF-8");
-        } catch (final UnsupportedEncodingException e) {
-            throw new RuntimeException("UTF-8 is a required encoding", e);
-        }
+        params.put("cidr", cidr);
     }
 }

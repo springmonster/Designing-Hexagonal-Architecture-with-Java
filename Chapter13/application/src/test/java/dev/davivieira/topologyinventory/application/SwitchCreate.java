@@ -18,12 +18,12 @@ public class SwitchCreate extends ApplicationTestData {
     @Inject
     SwitchManagementUseCase switchManagementUseCase;
 
-    public SwitchCreate(){
+    public SwitchCreate() {
         loadData();
     }
 
     @Given("I provide all required data to create a switch")
-    public void i_provide_all_required_data_to_create_a_switch(){
+    public void i_provide_all_required_data_to_create_a_switch() {
         networkSwitch = this.switchManagementUseCase.createSwitch(
                 Vendor.CISCO,
                 Model.XYZ0001,
@@ -37,7 +37,7 @@ public class SwitchCreate extends ApplicationTestData {
     public void a_new_switch_is_created() {
         assertNotNull(networkSwitch);
         assertEquals(Vendor.CISCO, networkSwitch.getVendor());
-        assertEquals(Model.XYZ0001,networkSwitch.getModel());
+        assertEquals(Model.XYZ0001, networkSwitch.getModel());
         assertEquals(IP.fromAddress("20.0.0.100"), networkSwitch.getIp());
         assertEquals(locationA, networkSwitch.getLocation());
         assertEquals(SwitchType.LAYER3, networkSwitch.getSwitchType());

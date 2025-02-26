@@ -66,11 +66,11 @@ public class SwitchManagementAdapterTest {
                 .statusCode(200)
                 .extract()
                 .asString();
-        var switches = ((EdgeRouter)getRouterDeserialized(routerStr)).getSwitches();
+        var switches = ((EdgeRouter) getRouterDeserialized(routerStr)).getSwitches();
         var containsSwitch = switches.values()
                 .stream()
                 .map(aSwitch -> aSwitch.getIp().getIpAddress())
-                .anyMatch(ip->ip.equals(expectedSwitchIP));
+                .anyMatch(ip -> ip.equals(expectedSwitchIP));
 
         assertTrue(containsSwitch);
     }
@@ -91,7 +91,7 @@ public class SwitchManagementAdapterTest {
                 .statusCode(200)
                 .extract()
                 .asString();
-        var switches = ((EdgeRouter)getRouterDeserialized(edgeRouterStr)).getSwitches();
+        var switches = ((EdgeRouter) getRouterDeserialized(edgeRouterStr)).getSwitches();
 
         assertFalse(switches.containsKey(Id.withId(expectedSwitchId)));
     }

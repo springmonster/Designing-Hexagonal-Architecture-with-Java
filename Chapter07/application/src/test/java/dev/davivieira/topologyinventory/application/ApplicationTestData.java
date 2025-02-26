@@ -10,7 +10,14 @@ import dev.davivieira.topologyinventory.domain.entity.CoreRouter;
 import dev.davivieira.topologyinventory.domain.entity.EdgeRouter;
 import dev.davivieira.topologyinventory.domain.entity.Router;
 import dev.davivieira.topologyinventory.domain.entity.Switch;
-import dev.davivieira.topologyinventory.domain.vo.*;
+import dev.davivieira.topologyinventory.domain.vo.IP;
+import dev.davivieira.topologyinventory.domain.vo.Id;
+import dev.davivieira.topologyinventory.domain.vo.Location;
+import dev.davivieira.topologyinventory.domain.vo.Model;
+import dev.davivieira.topologyinventory.domain.vo.Network;
+import dev.davivieira.topologyinventory.domain.vo.RouterType;
+import dev.davivieira.topologyinventory.domain.vo.SwitchType;
+import dev.davivieira.topologyinventory.domain.vo.Vendor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,7 +60,7 @@ public class ApplicationTestData {
 
     protected Location locationB;
 
-    public void loadData(){
+    public void loadData() {
         this.routerManagementUseCase = new RouterManagementInputPort();
         this.switchManagementUseCase = new SwitchManagementInputPort();
         this.networkManagementUseCase = new NetworkManagementInputPort();
@@ -75,7 +82,7 @@ public class ApplicationTestData {
                 latitude(10F).
                 longitude(-10F).
                 build();
-        this.network  = Network.builder().
+        this.network = Network.builder().
                 networkAddress(IP.fromAddress("20.0.0.0")).
                 networkName("TestNetwork").
                 networkCidr(8).

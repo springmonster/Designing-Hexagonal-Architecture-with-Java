@@ -4,14 +4,14 @@ function addNetworkToRouter() {
     const name = document.getElementById("name").value;
     const cidr = document.getElementById("cidr").value;
     const xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "http://localhost:8080/network/add?routerId="+routerId+"&"+
-        "address="+address+"&"+
-        "name="+name+"&"+
-        "cidr="+cidr, true);
+    xhttp.open("GET", "http://localhost:8080/network/add?routerId=" + routerId + "&" +
+        "address=" + address + "&" +
+        "name=" + name + "&" +
+        "cidr=" + cidr, true);
     xhttp.onload = function () {
         if (xhttp.status === 200) {
             document.getElementById("message").innerHTML = "Network added with success!"
-        } else{
+        } else {
             document.getElementById("message").innerHTML = "An error occurred while trying to add the network."
         }
     };
@@ -22,14 +22,14 @@ function addNetworkToRouter() {
 function getRouter() {
     const routerId = document.getElementById("routerId").value;
     var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
+    xhttp.onreadystatechange = function () {
         console.log(this.responseText);
         if (this.readyState == 4 && this.status == 200) {
             const json = JSON.parse(this.responseText)
             createTree(json)
         }
     };
-    xhttp.open("GET", "http://localhost:8080/network/get?routerId="+routerId, true);
+    xhttp.open("GET", "http://localhost:8080/network/get?routerId=" + routerId, true);
     xhttp.send();
 }
 

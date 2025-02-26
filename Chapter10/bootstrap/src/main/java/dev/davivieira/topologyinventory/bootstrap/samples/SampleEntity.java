@@ -15,7 +15,7 @@ import javax.persistence.QueryHint;
 @ApplicationScoped
 @NamedQuery(name = "SampleEntity.findAll",
         query = "SELECT f FROM SampleEntity f ORDER BY f.field",
-        hints = @QueryHint(name = "org.hibernate.cacheable", value = "true") )
+        hints = @QueryHint(name = "org.hibernate.cacheable", value = "true"))
 public class SampleEntity {
 
     @Id

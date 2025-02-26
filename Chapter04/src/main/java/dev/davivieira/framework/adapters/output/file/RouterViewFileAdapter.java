@@ -16,30 +16,24 @@ public class RouterViewFileAdapter implements RouterViewOutputPort {
 
     private static RouterViewFileAdapter instance;
 
-    @Override
-    public List<Router> fetchRelatedRouters() {
-        return readFileAsString();
+    private RouterViewFileAdapter() {
     }
 
     private static List<Router> readFileAsString() {
         List<Router> routers = new ArrayList<>();
 
         try (Stream<String> stream = Files.lines(Paths.get(RouterViewFileAdapter.class.getResource("/routers.txt").getPath()))) {
-            stream.forEach(line ->{
+            stream.forEach(line -> {
                 String[] routerEntry = line.split(";");
                 var id = routerEntry[0];
                 var type = routerEntry[1];
-                Router router = new Router(RouterType.valueOf(type),RouterId.withId(id));
+                Router router = new Router(RouterType.valueOf(type), RouterId.withId(id));
                 routers.add(router);
             });
-        } catch (IOException e){
-           e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return routers;
-    }
-
-
-    private RouterViewFileAdapter() {
     }
 
     public static RouterViewFileAdapter getInstance() {
@@ -47,5 +41,10 @@ public class RouterViewFileAdapter implements RouterViewOutputPort {
             instance = new RouterViewFileAdapter();
         }
         return instance;
+    }
+
+    @Override
+    public List<Router> fetchRelatedRouters() {
+        return readFileAsString();
     }
 }

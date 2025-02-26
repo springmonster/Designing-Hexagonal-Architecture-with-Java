@@ -17,7 +17,7 @@ public interface SwitchManagementUseCase {
             IP ip,
             Location location,
             SwitchType switchType
-            );
+    );
 
     Switch retrieveSwitch(Id id);
 

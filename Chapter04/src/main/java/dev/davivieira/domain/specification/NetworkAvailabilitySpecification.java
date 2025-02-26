@@ -19,13 +19,13 @@ public class NetworkAvailabilitySpecification extends AbstractSpecification<Rout
 
     @Override
     public boolean isSatisfiedBy(Router router) {
-        return router!=null && isNetworkAvailable(router);
+        return router != null && isNetworkAvailable(router);
     }
 
-    private boolean isNetworkAvailable(Router router){
+    private boolean isNetworkAvailable(Router router) {
         var availability = true;
         for (Network network : router.getNetworkSwitch().getNetworks()) {
-            if(network.getAddress().getIPAddress().equals(address.getIPAddress()) && network.getCidr() == cidr) {
+            if (network.getAddress().getIPAddress().equals(address.getIPAddress()) && network.getCidr() == cidr) {
                 availability = false;
                 break;
             }

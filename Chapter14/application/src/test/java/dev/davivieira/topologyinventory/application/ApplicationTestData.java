@@ -44,7 +44,7 @@ public class ApplicationTestData {
 
     protected Location locationB;
 
-    public void loadData(){
+    public void loadData() {
         this.locationA = Location.builder().
                 address("Av Republica Argentina 3109").
                 city("Curitiba").
@@ -63,7 +63,7 @@ public class ApplicationTestData {
                 latitude(10F).
                 longitude(-10F).
                 build();
-        this.network  = Network.builder().
+        this.network = Network.builder().
                 networkAddress(IP.fromAddress("20.0.0.0")).
                 networkName("TestNetwork").
                 networkCidr(8).

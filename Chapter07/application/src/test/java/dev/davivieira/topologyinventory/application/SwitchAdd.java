@@ -1,7 +1,11 @@
 package dev.davivieira.topologyinventory.application;
 
 import dev.davivieira.topologyinventory.domain.entity.Switch;
-import dev.davivieira.topologyinventory.domain.vo.*;
+import dev.davivieira.topologyinventory.domain.vo.IP;
+import dev.davivieira.topologyinventory.domain.vo.Id;
+import dev.davivieira.topologyinventory.domain.vo.Model;
+import dev.davivieira.topologyinventory.domain.vo.SwitchType;
+import dev.davivieira.topologyinventory.domain.vo.Vendor;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 
@@ -10,12 +14,12 @@ import static org.junit.Assert.assertNotNull;
 
 public class SwitchAdd extends ApplicationTestData {
 
-    public SwitchAdd(){
+    public SwitchAdd() {
         loadData();
     }
 
     @Given("I provide a switch")
-    public void i_provide_a_switch(){
+    public void i_provide_a_switch() {
         networkSwitch = Switch.builder().
                 id(Id.withId("f8c3de3d-1fea-4d7c-a8b0-29f63c4c3490")).
                 vendor(Vendor.CISCO).
@@ -28,7 +32,7 @@ public class SwitchAdd extends ApplicationTestData {
     }
 
     @Then("I add the switch to the edge router")
-    public void i_add_the_switch_to_the_edge_router(){
+    public void i_add_the_switch_to_the_edge_router() {
         assertNotNull(edgeRouter);
         edgeRouter = this.switchManagementUseCase.
                 addSwitchToEdgeRouter(networkSwitch, edgeRouter);

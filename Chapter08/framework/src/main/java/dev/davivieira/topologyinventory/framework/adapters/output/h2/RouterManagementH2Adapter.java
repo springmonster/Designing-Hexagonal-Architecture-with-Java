@@ -17,8 +17,15 @@ public class RouterManagementH2Adapter implements RouterManagementOutputPort {
     @PersistenceContext
     private EntityManager em;
 
-    private RouterManagementH2Adapter(){
+    private RouterManagementH2Adapter() {
         setUpH2Database();
+    }
+
+    public static RouterManagementH2Adapter getInstance() {
+        if (instance == null) {
+            instance = new RouterManagementH2Adapter();
+        }
+        return instance;
     }
 
     @Override
@@ -47,12 +54,5 @@ public class RouterManagementH2Adapter implements RouterManagementOutputPort {
         EntityManager em =
                 entityManagerFactory.createEntityManager();
         this.em = em;
-    }
-
-    public static RouterManagementH2Adapter getInstance() {
-        if (instance == null) {
-            instance = new RouterManagementH2Adapter();
-        }
-        return instance;
     }
 }

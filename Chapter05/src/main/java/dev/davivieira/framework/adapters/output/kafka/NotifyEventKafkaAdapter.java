@@ -1,13 +1,15 @@
 package dev.davivieira.framework.adapters.output.kafka;
 
 import dev.davivieira.application.ports.output.NotifyEventOutputPort;
-import dev.davivieira.framework.adapters.input.rest.RouterNetworkRestAdapter;
 import dev.davivieira.framework.adapters.input.websocket.WebSocketClientAdapter;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.clients.producer.*;
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.Producer;
+import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.LongDeserializer;
 import org.apache.kafka.common.serialization.LongSerializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -29,19 +31,19 @@ public class NotifyEventKafkaAdapter implements NotifyEventOutputPort {
 
     private static String KAFKA_BROKERS = "localhost:9092";
 
-    private static String GROUP_ID_CONFIG="consumerGroup1";
+    private static String GROUP_ID_CONFIG = "consumerGroup1";
 
-    private static String CLIENT_ID="hexagonal-client";
+    private static String CLIENT_ID = "hexagonal-client";
 
-    private static String TOPIC_NAME="topology-inventory-events";
+    private static String TOPIC_NAME = "topology-inventory-events";
 
-    private static String OFFSET_RESET_EARLIER="earliest";
+    private static String OFFSET_RESET_EARLIER = "earliest";
 
-    private  static Integer MAX_NO_MESSAGE_FOUND_COUNT=100;
+    private static Integer MAX_NO_MESSAGE_FOUND_COUNT = 100;
 
     private static boolean sendToWebsocket;
 
-    private static Producer<Long, String> createProducer(){
+    private static Producer<Long, String> createProducer() {
         Properties props = new Properties();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_BROKERS);
         props.put(ProducerConfig.CLIENT_ID_CONFIG, CLIENT_ID);
@@ -51,7 +53,7 @@ public class NotifyEventKafkaAdapter implements NotifyEventOutputPort {
         return new KafkaProducer<>(props);
     }
 
-    public static Consumer<Long, String> createConsumer(){
+    public static Consumer<Long, String> createConsumer() {
         Properties props = new Properties();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_BROKERS);
         props.put(ConsumerConfig.GROUP_ID_CONFIG, GROUP_ID_CONFIG);
@@ -66,15 +68,25 @@ public class NotifyEventKafkaAdapter implements NotifyEventOutputPort {
         return consumer;
     }
 
+    public static NotifyEventKafkaAdapter getInstance() {
+        if (instance == null) {
+            instance = new NotifyEventKafkaAdapter();
+        }
+        sendToWebsocket = true;
+        producer = (KafkaProducer<Long, String>) createProducer();
+        consumer = (KafkaConsumer<Long, String>) createConsumer();
+        return instance;
+    }
+
     @Override
-    public void sendEvent(String eventMessage){
+    public void sendEvent(String eventMessage) {
         var record = new ProducerRecord<Long, String>(
                 TOPIC_NAME, eventMessage);
         try {
             var metadata = producer.send(record).get();
             System.out.println("Event message " +
-                    "sent to the topic "+TOPIC_NAME+": "
-                    +eventMessage+".");
+                    "sent to the topic " + TOPIC_NAME + ": "
+                    + eventMessage + ".");
             getEvent();
         } catch (Exception e) {
             e.printStackTrace();
@@ -82,7 +94,7 @@ public class NotifyEventKafkaAdapter implements NotifyEventOutputPort {
     }
 
     @Override
-    public String getEvent(){
+    public String getEvent() {
         int noMessageToFetch = 0;
         AtomicReference<String> event = new AtomicReference<>("");
         while (true) {
@@ -93,7 +105,7 @@ public class NotifyEventKafkaAdapter implements NotifyEventOutputPort {
                     break;
                 else
                     continue;
-                }
+            }
             consumerRecords.forEach(record -> {
                 System.out.println("Record Key " + record.key());
                 System.out.println("Record value " + record.value());
@@ -103,12 +115,12 @@ public class NotifyEventKafkaAdapter implements NotifyEventOutputPort {
             });
         }
         var eventMessage = event.toString();
-        if(sendToWebsocket)
-        sendMessage(eventMessage);
+        if (sendToWebsocket)
+            sendMessage(eventMessage);
         return eventMessage;
     }
 
-    public void sendMessage(String message){
+    public void sendMessage(String message) {
         try {
             var client = new WebSocketClientAdapter(new URI("ws://localhost:8887"));
             client.connectBlocking();
@@ -117,15 +129,5 @@ public class NotifyEventKafkaAdapter implements NotifyEventOutputPort {
         } catch (URISyntaxException | InterruptedException e) {
             e.printStackTrace();
         }
-    }
-
-    public static NotifyEventKafkaAdapter getInstance(){
-        if (instance == null) {
-            instance = new NotifyEventKafkaAdapter();
-        }
-        sendToWebsocket = true;
-        producer = (KafkaProducer<Long, String>) createProducer();
-        consumer = (KafkaConsumer<Long, String>) createConsumer();
-        return instance;
     }
 }

@@ -13,7 +13,7 @@ public interface RouterViewUseCase {
 
         private RouterType type;
 
-        public RelatedRoutersCommand(String type){
+        public RelatedRoutersCommand(String type) {
             this.type = RouterType.valueOf(type);
         }
 

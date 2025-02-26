@@ -20,7 +20,7 @@ public abstract class Equipment {
     protected IP ip;
     protected Location location;
 
-    public static Predicate<Equipment> getVendorPredicate(Vendor vendor){
+    public static Predicate<Equipment> getVendorPredicate(Vendor vendor) {
         return r -> r.getVendor().equals(vendor);
     }
 }

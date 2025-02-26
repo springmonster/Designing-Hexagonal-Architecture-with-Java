@@ -39,7 +39,7 @@ public class RouterManagementGenericAdapter {
                                Model model,
                                IP ip,
                                Location location,
-                               RouterType routerType){
+                               RouterType routerType) {
         var router = routerManagementUseCase.createRouter(
                 null,
                 vendor,
