@@ -1,0 +1,76 @@
+@startuml
+participant Actor
+Actor -> App : main
+activate App
+create RouterViewCLIAdapter
+App -> RouterViewCLIAdapter : new
+activate RouterViewCLIAdapter
+RouterViewCLIAdapter -> RouterViewCLIAdapter : setAdapters
+activate RouterViewCLIAdapter
+RouterViewCLIAdapter -> RouterViewFileAdapter : getInstance
+activate RouterViewFileAdapter
+RouterViewFileAdapter -> RouterViewFileAdapter : new
+activate RouterViewFileAdapter
+RouterViewFileAdapter --> RouterViewFileAdapter
+deactivate RouterViewFileAdapter
+RouterViewFileAdapter --> RouterViewCLIAdapter
+deactivate RouterViewFileAdapter
+create RouterViewInputPort
+RouterViewCLIAdapter -> RouterViewInputPort : new
+activate RouterViewInputPort
+RouterViewInputPort --> RouterViewCLIAdapter
+deactivate RouterViewInputPort
+RouterViewCLIAdapter --> RouterViewCLIAdapter
+deactivate RouterViewCLIAdapter
+RouterViewCLIAdapter --> App
+deactivate RouterViewCLIAdapter
+App -> RouterViewCLIAdapter : obtainRelatedRouters
+activate RouterViewCLIAdapter
+RouterViewCLIAdapter -> RouterType : valueOf
+activate RouterType
+RouterType --> RouterViewCLIAdapter
+deactivate RouterType
+RouterViewCLIAdapter -> Router : filterRouterByType
+activate Router
+Router -> Enum : equals
+activate Enum
+Enum --> Router
+deactivate Enum
+Router -> Router : isCore
+activate Router
+Router -> Router : p ->
+activate Router
+Router -> Router : getRouterType
+activate Router
+Router --> Router
+deactivate Router
+Router --> Router
+deactivate Router
+Router --> Router
+deactivate Router
+Router -> Router : isEdge
+activate Router
+Router -> Router : p ->
+activate Router
+Router -> Router : getRouterType
+activate Router
+Router --> Router
+deactivate Router
+Router --> Router
+deactivate Router
+Router --> Router
+deactivate Router
+Router --> RouterViewCLIAdapter
+deactivate Router
+RouterViewCLIAdapter -> RouterViewUseCase : getRouters
+activate RouterViewUseCase
+RouterViewUseCase --> RouterViewCLIAdapter
+deactivate RouterViewUseCase
+RouterViewCLIAdapter --> App
+deactivate RouterViewCLIAdapter
+App -> PrintStream : println
+activate PrintStream
+PrintStream --> App
+deactivate PrintStream
+return
+@enduml
