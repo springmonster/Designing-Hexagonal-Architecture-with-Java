@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+// todo no usage in chapter 04
 public class RouterViewFileAdapter implements RouterViewOutputPort {
 
     private static RouterViewFileAdapter instance;
