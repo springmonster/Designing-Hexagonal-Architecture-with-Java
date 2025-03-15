@@ -17,7 +17,7 @@ public abstract class RouterNetworkAdapter {
         var routerId = RouterId.withId(params.get("routerId"));
         var network = new Network(IP.fromAddress(params.get("address")),
                 params.get("name"),
-                Integer.valueOf(params.get("cidr")));
+                Integer.parseInt(params.get("cidr")));
         return routerNetworkUseCase.addNetworkToRouter(routerId, network);
     }
 
