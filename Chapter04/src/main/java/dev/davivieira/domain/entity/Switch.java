@@ -23,11 +23,8 @@ public class Switch {
     }
 
     public Switch addNetwork(Network network, Router router) {
-        List<Network> newNetworks = new ArrayList<>();
 
-        router.retrieveNetworks().forEach(net -> {
-            newNetworks.add(net);
-        });
+        List<Network> newNetworks = new ArrayList<>(router.retrieveNetworks());
 
         newNetworks.add(network);
         return new Switch(this.switchId, this.switchType, newNetworks, this.address);
