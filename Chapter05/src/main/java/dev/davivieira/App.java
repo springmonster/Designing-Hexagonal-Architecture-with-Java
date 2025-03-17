@@ -25,7 +25,7 @@ public class App {
     NotifyEventOutputPort notifyOutputPort;
 
     public static void main(String... args) throws IOException, InterruptedException {
-        var adapter = "cli";
+        var adapter = "rest";
         if (args.length > 0) {
             adapter = args[0];
         }

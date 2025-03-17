@@ -14,6 +14,7 @@ public class RouterNetworkInputPort implements RouterNetworkUseCase {
 
     private NotifyEventOutputPort notifyEventOutputPort;
 
+    // todo multiple output ports in input port
     public RouterNetworkInputPort(RouterNetworkOutputPort routerNetworkOutputPort,
                                   NotifyEventOutputPort notifyEventOutputPort) {
         this.routerNetworkOutputPort = routerNetworkOutputPort;

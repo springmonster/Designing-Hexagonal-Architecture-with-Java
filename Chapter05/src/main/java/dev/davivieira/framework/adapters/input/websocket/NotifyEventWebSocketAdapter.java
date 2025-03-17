@@ -16,6 +16,7 @@ public class NotifyEventWebSocketAdapter extends WebSocketServer {
         super(address);
     }
 
+    //todo websocket startup
     public static void startServer() throws IOException, InterruptedException {
         var ws = new NotifyEventWebSocketAdapter(
                 new InetSocketAddress("localhost", 8887));
