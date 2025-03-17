@@ -10,7 +10,7 @@ import dev.davivieira.domain.vo.RouterId;
 
 public class RouterNetworkInputPort implements RouterNetworkUseCase {
 
-    private RouterNetworkOutputPort routerNetworkOutputPort;
+    private final RouterNetworkOutputPort routerNetworkOutputPort;
 
     private NotifyEventOutputPort notifyEventOutputPort;
 
